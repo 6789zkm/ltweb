@@ -1,0 +1,93 @@
+.main-image {
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+.thumbnail {
+	cursor: pointer;
+	width: 80px;
+	height: auto;
+}
+
+.productPrice{
+	font-weight: 600 !important;
+	color: black;
+	font-style: inherit;
+	font-size: 1.5rem;
+}
+
+.color-options button {
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	border: 1px solid #99999999;
+}
+
+.color-options button:hover {
+	border: 1px solid  black;
+}
+
+.color-options button:active {
+	border: 2px solid black;
+}
+
+.btn.btn-outline-primary.size-btn.active {
+	background-color: white; /* color: white; */
+	color: black;
+	border-color: black;
+}
+
+.btn.btn-outline-primary.size-btn:hover {
+	border-color: black;
+	background-color: white;
+	color: black;
+}
+
+.btn.btn-outline-primary.size-btn:active {
+	border-color: black;
+	background-color: white;
+	color: black;
+}
+
+.size-options .size-btn {
+	width: 50px;
+	margin-right: 10px;
+}
+
+.size-options .size-btn.size-unavailable{
+	
+}
+
+.size-buttons button {
+	border-color: #99999999;
+	color: black;
+}
+
+.btn.btn-primary.btn-cart {
+	color: black;
+	background-color: white;
+	border-color: #999999;
+}
+
+.btn.btn-primary.btn-cart:hover {
+	border-color: black;
+	background-color: black;
+	color: white;
+}
+
+.quantity-input {
+	border: 1px solid #999999;
+	width: 2px;
+}
+
+/* Hide spinner arrows in Chrome, Safari, Edge, and Opera */
+.quantity-input::-webkit-outer-spin-button, .quantity-input::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Hide spinner arrows in Firefox */
+.quantity-input[type=number] {
+	-moz-appearance: textfield;
+}
