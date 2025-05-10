@@ -1,5 +1,3 @@
-
-
 // Hàm cập nhật tổng tiền
 function updateTotal() {
 	let total = 0;
@@ -13,10 +11,11 @@ function updateTotal() {
 	});
 
 	// Cập nhật tổng tiền vào phần tử HTML
-	document.getElementById('totalPrice').innerText = total.toLocaleString() +' đ';
+	document.getElementById('totalPrice').innerText = total.toLocaleString() + ' đ';
 }
 
 function checkOut() {
+	console.log("Checking login status..."); // Debug
 	// Tạo mảng để lưu trữ các cartId đã chọn
 	const selectedCartIds = [];
 
@@ -25,9 +24,7 @@ function checkOut() {
 
 	// Lặp qua các checkbox
 	checkboxes.forEach((checkbox) => {
-		// Kiểm tra xem checkbox có được chọn hay không
 		if (checkbox.checked) {
-			// Nếu checkbox được chọn, thêm cartId vào mảng selectedCartIds
 			const cartId = checkbox.closest('.cart-item').getAttribute('data-cart-id');
 			selectedCartIds.push(cartId);
 		}
@@ -39,13 +36,82 @@ function checkOut() {
 		return;
 	}
 
+	// Mã hóa selectedCartIds
+	const encodedSelectedCartIds = encodeURIComponent(JSON.stringify(selectedCartIds));
+
+	// URL gọi AJAX
+	const url = window.contextPath + "/processCheckout?selectedCartIds=" + encodedSelectedCartIds;
+	console.log("Fetching URL:", url); // Debug
+
+	// Gửi yêu cầu AJAX đến servlet /processCheckout
+	fetch(url)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok: " + response.status);
+			}
+			return response.json();
+		})
+		.then(data => {
+			console.log("Response received:", data); // Debug
+			if (data.status === "not_logged_in") {
+				console.log("Redirecting to:", data.redirect); // Debug
+				// Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+				localStorage.setItem("selectedCartIds", JSON.stringify(selectedCartIds));
+				window.location.href = data.redirect;
+			} else if (data.status === "logged_in") {
+				console.log("Performing checkout with selectedCartIds:", selectedCartIds); // Debug
+				// Đã đăng nhập, gọi logic checkout
+				performCheckout(selectedCartIds);
+			} else {
+				console.error("Unexpected status:", data.status);
+				alert("Đã có lỗi xảy ra, vui lòng thử lại.");
+			}
+		})
+		.catch(error => {
+			console.error("Fetch error:", error);
+			alert("Đã có lỗi xảy ra khi kiểm tra trạng thái đăng nhập, vui lòng thử lại.");
+		});
+}
+
+// Hàm thực hiện logic checkout
+function performCheckout(selectedCartIds) {
+	console.log("Performing checkout with cart IDs:", selectedCartIds); // Debug
+	// Lưu danh sách cartId vào localStorage để khôi phục sau khi đăng nhập
+	localStorage.setItem("selectedCartIds", JSON.stringify(selectedCartIds));
+
 	// Mã hóa selectedCartIds dưới dạng JSON và encodeURIComponent
 	const encodedSelectedCartIds = encodeURIComponent(JSON.stringify(selectedCartIds));
 
 	// Chuyển hướng với dữ liệu đã mã hóa
-	window.location.href = 'checkout?selectedCartIds=' + encodedSelectedCartIds;
+	window.location.href = window.contextPath + "/checkout?selectedCartIds=" + encodedSelectedCartIds;
 }
 
+// Tự động chọn các checkbox nếu có trong localStorage hoặc query string
+window.onload = function() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const selectedCartIdsFromUrl = urlParams.get("selectedCartIds");
+	let selectedCartIds = [];
+
+	if (selectedCartIdsFromUrl) {
+		selectedCartIds = JSON.parse(decodeURIComponent(selectedCartIdsFromUrl));
+		localStorage.setItem("selectedCartIds", JSON.stringify(selectedCartIds));
+	} else {
+		selectedCartIds = JSON.parse(localStorage.getItem("selectedCartIds")) || [];
+	}
+
+	const checkboxes = document.querySelectorAll(".select-item");
+	checkboxes.forEach((checkbox) => {
+		const cartId = checkbox.closest('.cart-item').getAttribute('data-cart-id');
+		if (selectedCartIds.includes(cartId)) {
+			checkbox.checked = true;
+		}
+	});
+
+	if (selectedCartIdsFromUrl) {
+		localStorage.removeItem("selectedCartIds");
+	}
+	updateTotal();
+};
 
 // Hàm để chọn/bỏ chọn tất cả sản phẩm
 function toggleSelectAll(selectAllCheckbox) {
@@ -84,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function closeModal() {
 	const modal = document.getElementById('deleteConfirmationModal');
-	const backdrop = document.querySelector('.modal-backdrop'); // Tìm phần nền đen
+	const backdrop = document.querySelector('.modal-backdrop');
 
 	// Loại bỏ lớp 'show' của modal và ẩn modal
 	modal.classList.remove('show');
@@ -94,7 +160,7 @@ function closeModal() {
 
 	// Xóa phần nền đen (modal-backdrop)
 	if (backdrop) {
-		backdrop.remove(); // Loại bỏ phần nền tối
+		backdrop.remove();
 	}
 }
 
@@ -105,14 +171,14 @@ function openModal() {
 	let backdrop = document.querySelector('.modal-backdrop');
 	if (!backdrop) {
 		backdrop = document.createElement('div');
-		backdrop.classList.add('modal-backdrop', 'fade', 'show'); // Tạo phần nền tối
-		document.body.appendChild(backdrop); // Thêm nền tối vào body
+		backdrop.classList.add('modal-backdrop', 'fade', 'show');
+		document.body.appendChild(backdrop);
 	}
 
-	modal.classList.add('show');  // Thêm lớp show vào modal để hiển thị
-	modal.style.display = 'block';  // Đảm bảo modal hiển thị
-	modal.setAttribute('aria-hidden', 'false');  // Modal có thể tương tác
-	modal.setAttribute('aria-modal', 'true');  // Modal đang được mở
+	modal.classList.add('show');
+	modal.style.display = 'block';
+	modal.setAttribute('aria-hidden', 'false');
+	modal.setAttribute('aria-modal', 'true');
 }
 
 function changeQuantity(change, inputId) {
@@ -131,11 +197,12 @@ function changeQuantity(change, inputId) {
 			openModal();
 		} else if (newQuantity > 0) {
 			quantityInput.value = newQuantity;
-			window.location.href = 'cartdetail?action=update&&quantity=' + newQuantity + '&&cartId=' + cartId;
+			window.location.href = window.contextPath + '/cartdetail?action=update&quantity=' + newQuantity + '&cartId=' + cartId;
 		}
 	}
 }
-function deleteInCart(inputId){
+
+function deleteInCart(inputId) {
 	var cartId = inputId.split('_')[1];
 	document.getElementById('confirmDeleteButton').setAttribute('data-cart-id', cartId);
 	openModal();
@@ -150,7 +217,5 @@ function confirmDelete() {
 	var encodedUrl = encodeURIComponent(currentUrl);
 
 	// Thực hiện điều hướng đến hành động xóa
-	window.location.href = 'cartdetail?action=remove&cartId=' + cartId + '&redirectUrl=' + encodedUrl;
+	window.location.href = window.contextPath + '/cartdetail?action=remove&cartId=' + cartId + '&redirectUrl=' + encodedUrl;
 }
-
-

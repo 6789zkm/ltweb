@@ -1,6 +1,7 @@
 package controller.admin.order;
 
 import java.io.IOException;
+import java.util.List;
 
 import dto.response.AdminOrderResponse;
 import jakarta.servlet.ServletException;
@@ -16,23 +17,27 @@ public class UpdateOrderView extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String orderId = req.getParameter("order_id");
 
-	    if (orderId != null && !orderId.isEmpty()) {
-	        try {
-	            Long idConvert = Long.parseLong(orderId);
-	            AdminOrderResponse aor = orderReposritory.getOrderById(idConvert);
-	            
-	            req.setAttribute("order", aor);
-	            req.getRequestDispatcher("/view/admin/admin_order_update.jsp").forward(req, resp);
-	        } catch (NumberFormatException e) {
-	            req.setAttribute("error", "ID đơn hàng không hợp lệ.");
-	            resp.sendRedirect(req.getContextPath() + "/order");
-	        }
-	    } else {
-	        req.setAttribute("error", "Không có ID đơn hàng để xóa.");
-	        resp.sendRedirect(req.getContextPath() + "/order");
-	    }
+		if (orderId != null && !orderId.isEmpty()) {
+			try {
+				Long idConvert = Long.parseLong(orderId);
+				AdminOrderResponse aor = orderReposritory.getOrderById(idConvert);
+				List<AdminOrderResponse> list_order_update = orderReposritory.getAllOrderWithResponseId(idConvert);
+				for(AdminOrderResponse ao : list_order_update) {
+					System.out.println(ao);
+				}
+				req.setAttribute("order", aor);
+				req.setAttribute("list_order_update", list_order_update);
+				req.getRequestDispatcher("/view/admin/admin_order_update.jsp").forward(req, resp);
+			} catch (NumberFormatException e) {
+				req.setAttribute("error", "ID đơn hàng không hợp lệ.");
+				resp.sendRedirect(req.getContextPath() + "/order");
+			}
+		} else {
+			req.setAttribute("error", "Không có ID đơn hàng để xóa.");
+			resp.sendRedirect(req.getContextPath() + "/order");
+		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);

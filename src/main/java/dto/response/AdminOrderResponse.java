@@ -6,16 +6,22 @@ public class AdminOrderResponse {
 	private String name_product;
 	private int quantity_order;
 	private double price;
+	private String address;
+	private String date_order;
 	private String status;
+	private String sign;
 	public AdminOrderResponse(long id_order_admin, String name_customer, String name_product, int quantity_order,
-			double price, String status) {
+							  double price, String address, String date_order ,String status, String sign) {
 		super();
 		this.id_order_admin = id_order_admin;
 		this.name_customer = name_customer;
 		this.name_product = name_product;
 		this.quantity_order = quantity_order;
 		this.price = price;
+		this.address = address;
+		this.date_order = date_order;
 		this.status = status;
+		this.sign = sign;
 	}
 	public long getId_order_admin() {
 		return id_order_admin;
@@ -35,12 +41,15 @@ public class AdminOrderResponse {
 	public String getStatus() {
 		return status;
 	}
+	public String getAddress() {return address;}
+	public String getDate_order() {return date_order;}
+	public String getSign() {return sign;}
 	@Override
 	public String toString() {
 		return "AdminOrderResponse [id_order_admin=" + id_order_admin + ", name_employee=" + name_customer
 				+ ", name_product=" + name_product + ", quantity_order=" + quantity_order + ", price=" + price
-				+ ", status=" + status + "]";
+				+ ", address=" + address + ", date=" + date_order +", status=" + status + ",sign=" + sign + "]";
 	}
-	
-	
+
+
 }
