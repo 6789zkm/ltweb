@@ -19,98 +19,82 @@
 }
 .form{
     position: absolute;
-    max-width: 430px;
-    width: 100%;
+    max-width: 500px; /* Tăng chiều rộng tối đa của form */
+    width: 70%; /* Điều chỉnh chiều rộng theo phần trăm cho responsive */
     padding: 30px;
     border-radius: 6px;
     background: #FFF;
-}
-.form.signup{
-    opacity: 0;
-    pointer-events: none;
-}
-.forms.show-signup .form.signup{
-    opacity: 1;
-    pointer-events: auto;
-}
-.forms.show-signup .form.login{
-    opacity: 0;
-    pointer-events: none;
+    height: auto; /* Điều chỉnh chiều cao tự động */
+    display: flex;
+    flex-direction: column;
 }
 header{
     font-size: 28px;
     font-weight: 600;
     color: #232836;
     text-align: center;
+    margin-bottom: 30px;
 }
-form{
-    margin-top: 30px;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Tăng khoảng cách giữa các input */
+    margin-bottom: 25px; /* Thêm khoảng cách dưới form input */
 }
 .form .field{
     position: relative;
     height: 50px;
     width: 100%;
-    margin-top: 20px;
     border-radius: 6px;
 }
-.field input,
-.field button{
+.field input {
     height: 100%;
+    width: 100%;
+    border: 1px solid #CACACA;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+    padding: 0 15px;
+    outline: none;
+}
+.field input:focus{
+    border-bottom-width: 2px;
+}
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Tăng khoảng cách giữa các nút */
+    margin-bottom: 20px; /* Thêm khoảng cách dưới nhóm nút */
+}
+.button-group .field.button-field button {
+    height: 50px;
     width: 100%;
     border: none;
     font-size: 16px;
     font-weight: 400;
     border-radius: 6px;
-}
-.field input{
-    outline: none;
-    padding: 0 15px;
-    border: 1px solid#CACACA;
-}
-.field input:focus{
-    border-bottom-width: 2px;
-}
-.eye-icon{
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #8b8b8b;
-    cursor: pointer;
-    padding: 5px;
-}
-.field button{
     color: #fff;
     background-color: #0171d3;
-    transition: all 0.3s ease;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
-.field button:hover{
+.button-group .field.button-field button:hover {
     background-color: #016dcb;
 }
-.form-link{
-    text-align: center;
-    margin-top: 10px;
+.forgot-password-container {
+    text-align: right;
+    margin-bottom: 20px; /* Thêm khoảng cách dưới "Quên mật khẩu" trước đường kẻ */
 }
-.form-link span,
-.form-link a{
-    font-size: 14px;
-    font-weight: 400;
-    color: #232836;
-}
-.form a{
-    color: #0171d3;
+.forgot-password-container a {
+    color: black;
     text-decoration: none;
-}
-.form-content a:hover{
-    text-decoration: underline;
+    font-size: 14px;
 }
 .line{
     position: relative;
     height: 1px;
     width: 100%;
-    margin: 36px 0;
+    margin-bottom: 20px; /* Thêm khoảng cách dưới đường kẻ */
     background-color: #d4d4d4;
 }
 .line::before{
@@ -123,73 +107,59 @@ form{
     color: #8b8b8b;
     padding: 0 15px;
 }
+
+.button-signup{
+    height: 50px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #0171d3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 2%;
+}
+
+.button-group .field.button-field button:hover{
+    background-color: #0f2094;
+}
+
+.button-signup:hover{
+    background-color: #0f2094;
+}
+.media-options {
+    margin-top: 20px;
+}
 .media-options a{
     display: flex;
     align-items: center;
     justify-content: center;
-}
-a.facebook{
-    color: #fff;
-    background-color: #4267b2;
-}
-a.facebook .facebook-icon{
-    height: 28px;
-    width: 28px;
-    color: #0171d3;
-    font-size: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-.facebook-icon,
-img.google-img{
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-}
-img.google-img{
-    height: 20px;
-    width: 20px;
-    object-fit: cover;
-}
-a.google{
+    margin-bottom: 10px;
+    text-decoration: none;
     border: 1px solid #CACACA;
-}
-a.google .google-icon{
-    height: 28px;
-    width: 28px;
-    color: #0171d3;
-    font-size: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-.google-icon,
-img.google-img{
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-}
-img.google-img{
-    height: 20px;
-    width: 20px;
-    object-fit: cover;
-}
-a.google span{
-    font-weight: 500;
-    opacity: 0.6;
+    border-radius: 6px;
+    padding: 10px 0;
     color: #232836;
+    font-weight: 500;
+}
+.media-options a:hover {
+    background-color: #f0f0f0;
+}
+.media-options a i,
+.media-options a img {
+    margin-right: 10px;
+}
+.media-options a.google {
+    border-color: #db4437;
+}
+.media-options a.google i {
+    color: #db4437;
 }
 
 @media screen and (max-width: 400px) {
     .form{
         padding: 20px 10px;
     }
-    
 }

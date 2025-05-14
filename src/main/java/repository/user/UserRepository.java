@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -940,8 +941,122 @@ public class UserRepository {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new UserRepository().addUser("", "84532532532", "", "123", ""));
+	public boolean signup(String username, String password) {
+		PreparedStatement pstSignup = null;
+
+		try {
+			connection = DBConnection.getConection();
+
+			// Câu lệnh SQL để gán quyền
+			String sqlSignup = "INSERT INTO `user`(`email`, `password`, `create_at`) VALUES (?,?,?)";
+			pstSignup = connection.prepareStatement(sqlSignup);
+			pstSignup.setString(1, username);
+			pstSignup.setString(2, password);
+			pstSignup.setString(3, LocalDate.now().toString());
+
+			int result = pstSignup.executeUpdate();
+
+			return result > 0; // Trả về true nếu gán quyền thành công
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false; // Nếu có lỗi, trả về false
+		} finally {
+			try {
+				if (pstSignup != null)
+					pstSignup.close();
+				if (connection != null)
+					DBConnection.closeConnection(connection);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean login(String username, String password) {
+		PreparedStatement pstLogin = null;
+		ResultSet rs = null;
+
+		try {
+			connection = DBConnection.getConection();
+
+			// Câu lệnh SQL để kiểm tra tài khoản
+			String sqlLogin = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?";
+			pstLogin = connection.prepareStatement(sqlLogin);
+			pstLogin.setString(1, username);
+			pstLogin.setString(2, password);
+
+			rs = pstLogin.executeQuery();
+
+			return rs.next(); // Trả về true nếu tìm thấy bản ghi phù hợp
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstLogin != null) pstLogin.close();
+				if (connection != null) DBConnection.closeConnection(connection);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean checkUsername(String username) {
+		PreparedStatement pstLogin = null;
+		ResultSet rs = null;
+
+		try {
+			connection = DBConnection.getConection();
+
+			// Câu lệnh SQL để kiểm tra tài khoản
+			String sqlLogin = "SELECT * FROM `user` WHERE `email` = ? ";
+			pstLogin = connection.prepareStatement(sqlLogin);
+			pstLogin.setString(1, username);
+
+			rs = pstLogin.executeQuery();
+
+			return rs.next(); // Trả về true nếu tìm thấy bản ghi phù hợp
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstLogin != null) pstLogin.close();
+				if (connection != null) DBConnection.closeConnection(connection);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	public boolean changePasswordUser(Long userId, String newPassword) {
+		PreparedStatement pst = null;
+
+		try {
+			connection = DBConnection.getConection();
+
+			String sql = "UPDATE `user` SET `password` = ? WHERE `id` = ?";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, newPassword);
+			pst.setLong(2, userId);
+
+			int rowsAffected = pst.executeUpdate();
+			return rowsAffected > 0; // Trả về true nếu cập nhật thành công
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (pst != null) pst.close();
+				if (connection != null) DBConnection.closeConnection(connection);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

@@ -18,10 +18,10 @@ import repository.user.UserRepository;
 public class MailService {
 	private UserRepository userRepository = new UserRepository();
 
-//	static final String from = "ecommerce789789";
+	//	static final String from = "ecommerce789789";
 //	static final String password = "Ecom123456789";ickj olkg qgvl zcqp
-	static final String from = "voxuandong14052004";
-	static final String password = "ickjolkgqgvlzcqp";
+	static final String from = "phamquockhanh0812@gmail.com";
+	static final String password = "fngd kqhs hess yalh";
 
 	// gửi email
 	public boolean sendEmail(String to, String subject, String content) {
@@ -63,8 +63,13 @@ public class MailService {
 	}
 
 	// tạo mã xác thực ngẫu nhiên
+//	public String generateVerificationCode() {
+//		return UUID.randomUUID().toString();
+//	}
+
 	public String generateVerificationCode() {
-		return UUID.randomUUID().toString();
+		int code = (int) (Math.random() * 9000) + 1000;
+		return String.valueOf(code);
 	}
 
 	// cập nhật email
@@ -80,8 +85,7 @@ public class MailService {
 		String verificationLink = "http://localhost:8080/Ecommerce_web/email?action=verify&&to=" + toEmail + "&&code="
 				+ verificationCode;
 		String subject = "Xác thực email của bạn";
-		String content = "Nhấn vào link sau để xác thực tài khoản: <a href=\"" + verificationLink
-				+ "\">Xác thực tài khoản</a>";
+		String content = "Đây là mã của bạn: " + verificationCode;
 
 		// Sử dụng hàm gửi email của bạn để gửi
 		sendEmail(toEmail, subject, content);
