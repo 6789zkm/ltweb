@@ -26,6 +26,14 @@ public class CheckOutController extends HttpServlet {
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
 
+		String customerName = req.getParameter("customerName");
+		String customerAddress = req.getParameter("address");
+		String customerPhone = req.getParameter("customerPhone");
+
+		req.setAttribute("customerName", customerName);
+		req.setAttribute("customerAddress", customerAddress);
+		req.setAttribute("customerPhone", customerPhone);
+
 		// Lấy và giải mã selectedCartIds
 		String encodedCartIds = req.getParameter("selectedCartIds");
 		// Giải mã URL
@@ -45,7 +53,7 @@ public class CheckOutController extends HttpServlet {
 			req.setAttribute("outOfStockProducts", outOfStockProducts);
 			getServletContext().removeAttribute("outOfStockProducts");
 		}
-		req.setAttribute("selectedProducts", selectedProducts);
+		req.getSession().setAttribute("selectedProducts", selectedProducts);
 		req.getRequestDispatcher("view/user/checkout.jsp").forward(req, resp);
 	}
 

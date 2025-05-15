@@ -57,7 +57,7 @@
 	</div>
 
 	<div class="container mt-4">
-		<form action="processingOrder" method="post">
+<%--		<form action="processingOrder" method="post">--%>
 			<div class="row">
 				<c:if test="${sessionScope.user != null}">
 					<c:set var="user" value="${sessionScope.user}" />
@@ -162,14 +162,17 @@
 							</div>
 							<!-- Truyền giá trị tổng tiền qua form -->
 							<input type="hidden" name="totalPrice" value="${totalPrice}" />
-							<button class="btn btn-dark w-100 mt-3">Đặt hàng</button>
+							<form action="${pageContext.request.contextPath}/bill" method="GET">
+								<button type="submit" class="btn btn-dark w-100 mt-3">Đặt hàng</button>
+							</form>
+
 							<p class="text-muted text-center mt-3">Khi tiếp tục, bạn đồng
 								ý với các Điều khoản & Điều kiện và Chính sách của chúng tôi.</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+<%--		</form>--%>
 
 	</div>
 

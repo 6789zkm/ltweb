@@ -67,6 +67,12 @@
 									name="address">
 							</div>
 
+							<div class="col-md-12 mt-3">
+								<label class="labels">Khóa</label><input type="text"
+																		 class="form-control" placeholder="${user.key}" value=""
+																		 readonly>
+							</div>
+
 						</div>
 						<div class="mt-3 text-center">
 						<input type="hidden" name="userId" value="${user.id}">

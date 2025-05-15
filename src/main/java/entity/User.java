@@ -11,6 +11,7 @@ public class User {
 	private String password;
 	private LocalDate createAt;
 	private LocalDate updateAt;
+	private String key;
 
 	public User() {
 	}
@@ -25,6 +26,18 @@ public class User {
 		this.password = password;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
+	}
+
+	public User(Long id, String name, String phone, String email, String address, String password, LocalDate createAt, LocalDate updateAt, String key) {
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
+		this.key = key;
 	}
 
 	public Long getId() {
@@ -87,4 +100,30 @@ public class User {
 		this.updateAt = updateAt;
 	}
 
+	public String getKey() {
+		return key;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", address='" + address + '\'' +
+				", password='" + password + '\'' +
+				", createAt=" + createAt +
+				", updateAt=" + updateAt +
+				", key='" + key + '\'' +
+				'}';
+	}
 }
