@@ -1,0 +1,224 @@
+package tool;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+
+public class SignView extends JFrame {
+    private JLabel lb_input, lb_publicKey, lb_privateKey, lb_keyLength;
+    private JTextField input, publicKey_field, privateKey_field;
+    private JComboBox<String> keyLength_field;
+    private JTextArea output;
+    private JButton btnSign, btnGenKeyPair, btnLoadPrivateKey, btnSavePublicKey, btnSavePrivateKey, btnChooseInputFile, btnSaveResult, btnCancelKey;
+
+
+
+    private static final String[] RSAKeyLengths = {
+            "512", "1024", "2048", "3072", "4096"
+    };
+
+    public SignView() {
+        setTitle("SignTool");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(850, 600);
+        setMinimumSize(new Dimension(600, 400));
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
+
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.insets = new Insets(5, 5, 5, 5);
+        gbcMain.fill = GridBagConstraints.HORIZONTAL;
+        gbcMain.weightx = 1.0;
+        gbcMain.gridwidth = GridBagConstraints.REMAINDER;
+
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setBorder(new LineBorder(Color.GRAY, 1));
+        GridBagConstraints gbcTop = new GridBagConstraints();
+        gbcTop.insets = new Insets(5, 5, 5, 5);
+        gbcTop.fill = GridBagConstraints.HORIZONTAL;
+        gbcTop.weightx = 1.0;
+
+        gbcTop.gridx = 0;
+        gbcTop.gridy = 0;
+        gbcTop.weightx = 0.0;
+        topPanel.add(lb_input = new JLabel("Input:"), gbcTop);
+
+        gbcTop.gridx = 1;
+        gbcTop.weightx = 1.0;
+        topPanel.add(input = new JTextField(), gbcTop);
+
+        gbcTop.gridx = 2;
+        gbcTop.weightx = 0.0;
+        btnChooseInputFile = new JButton("Choose File");
+        btnChooseInputFile.setPreferredSize(new Dimension(120, 30));
+        topPanel.add(btnChooseInputFile, gbcTop);
+
+        gbcTop.gridx = 0;
+        gbcTop.gridy = 1;
+        gbcTop.weightx = 0.0;
+        topPanel.add(lb_publicKey = new JLabel("Public Key:"), gbcTop);
+
+        gbcTop.gridx = 1;
+        gbcTop.weightx = 1.0;
+        topPanel.add(publicKey_field = new JTextField(), gbcTop);
+
+
+        gbcTop.gridx = 3;
+        gbcTop.weightx = 0.0;
+        btnSavePublicKey = new JButton("Save Public Key");
+        btnSavePublicKey.setPreferredSize(new Dimension(120, 30));
+        topPanel.add(btnSavePublicKey, gbcTop);
+
+        gbcTop.gridx = 0;
+        gbcTop.gridy = 2;
+        gbcTop.weightx = 0.0;
+        topPanel.add(lb_privateKey = new JLabel("Private Key:"), gbcTop);
+
+        gbcTop.gridx = 1;
+        gbcTop.weightx = 1.0;
+        topPanel.add(privateKey_field = new JTextField(), gbcTop);
+
+        gbcTop.gridx = 2;
+        gbcTop.weightx = 0.0;
+        btnLoadPrivateKey = new JButton("Load Private Key");
+        btnLoadPrivateKey.setPreferredSize(new Dimension(120, 30));
+        topPanel.add(btnLoadPrivateKey, gbcTop);
+
+        gbcTop.gridx = 3;
+        gbcTop.weightx = 0.0;
+        btnSavePrivateKey = new JButton("Save Private Key");
+        btnSavePrivateKey.setPreferredSize(new Dimension(120, 30));
+        topPanel.add(btnSavePrivateKey, gbcTop);
+
+        mainPanel.add(topPanel, gbcMain);
+
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        middlePanel.setBorder(new LineBorder(Color.GRAY, 1));
+        GridBagConstraints gbcMiddle = new GridBagConstraints();
+        gbcMiddle.insets = new Insets(5, 10, 5, 10);
+        gbcMiddle.fill = GridBagConstraints.HORIZONTAL;
+        gbcMiddle.weightx = 1.0;
+        gbcMiddle.gridwidth = GridBagConstraints.REMAINDER;
+
+        gbcMiddle.gridx = 0;
+        gbcMiddle.gridy = 0;
+        gbcMiddle.weightx = 0.0;
+        gbcMiddle.gridwidth = 1;
+        middlePanel.add(lb_keyLength = new JLabel("Key Length:"), gbcMiddle);
+
+        gbcMiddle.gridx = 1;
+        gbcMiddle.weightx = 1.0;
+        middlePanel.add(keyLength_field = new JComboBox<>(RSAKeyLengths), gbcMiddle);
+        keyLength_field.setSelectedItem("2048"); // Default to 2048 bits
+
+
+        gbcMiddle.gridx = 0;
+        gbcMiddle.gridy = 3;
+        gbcMiddle.weightx = 0.0;
+        gbcMiddle.gridwidth = 1;
+        JLabel lb_empty = new JLabel("");
+        middlePanel.add(lb_empty, gbcMiddle);
+
+
+
+        mainPanel.add(middlePanel, gbcMain);
+        middlePanel.setVisible(true);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBorder(new LineBorder(Color.GRAY, 1));
+
+        Dimension buttonSize = new Dimension(120, 30);
+
+        btnGenKeyPair = new JButton("Gen Key Pair");
+        btnSign = new JButton("Sign");
+        btnCancelKey = new JButton("Cancel Key");
+        btnSaveResult = new JButton("Save Result");
+
+        btnGenKeyPair.setPreferredSize(buttonSize);
+        btnCancelKey.setPreferredSize(buttonSize);
+        btnSign.setPreferredSize(buttonSize);
+        btnSaveResult.setPreferredSize(buttonSize);
+
+        buttonPanel.add(btnGenKeyPair);
+        buttonPanel.add(btnSign);
+        buttonPanel.add(btnCancelKey);
+        buttonPanel.add(btnSaveResult);
+
+        mainPanel.add(buttonPanel, gbcMain);
+
+        add(mainPanel, BorderLayout.NORTH);
+
+        output = new JTextArea();
+        output.setLineWrap(true);
+        output.setWrapStyleWord(true);
+        output.setEditable(false);
+        output.setText("Vui lòng tạo hoặc tải khóa để bắt đầu.");
+
+        JScrollPane scrollPane = new JScrollPane(output);
+        scrollPane.setPreferredSize(new Dimension(500, 100));
+
+        JPanel outputPanel = new JPanel(new BorderLayout());
+        outputPanel.setBorder(BorderFactory.createEmptyBorder(0, 13, 10, 13));
+        outputPanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(outputPanel, BorderLayout.CENTER);
+
+        initializeUIState();
+
+        publicKey_field.setEnabled(true);
+        privateKey_field.setEnabled(true);
+        setVisible(true);
+    }
+
+    private void initializeUIState() {
+        input.setEnabled(false);
+        btnChooseInputFile.setEnabled(false);
+        btnSign.setEnabled(false);
+        btnSaveResult.setEnabled(false);
+        btnCancelKey.setEnabled(false);
+        btnSavePublicKey.setEnabled(false);
+        btnLoadPrivateKey.setEnabled(true);
+        btnSavePrivateKey.setEnabled(false);
+        btnGenKeyPair.setEnabled(true);
+        keyLength_field.setEnabled(true);
+    }
+
+    public void disableComponent() {
+        input.setEnabled(false);
+        btnChooseInputFile.setEnabled(false);
+        btnSign.setEnabled(false);
+        btnSaveResult.setEnabled(false);
+        btnCancelKey.setEnabled(false);
+    }
+
+    public void enableComponent() {
+        input.setEnabled(true);
+        btnChooseInputFile.setEnabled(true);
+        btnSign.setEnabled(true);
+        btnSaveResult.setEnabled(true);
+        btnCancelKey.setEnabled(true);
+    }
+
+    public JButton getBtnSaveResult() { return btnSaveResult; }
+    public JButton getBtnChooseInputFile() { return btnChooseInputFile; }
+    public JButton getBtnGenKeyPair() { return btnGenKeyPair; }
+    public JButton getBtnLoadPrivateKey() { return btnLoadPrivateKey; }
+    public JButton getBtnSavePublicKey() { return btnSavePublicKey; }
+    public JButton getBtnSavePrivateKey() { return btnSavePrivateKey; }
+    public JButton getBtnCancelKey() { return btnCancelKey; }
+    public JTextArea getOutput() { return output; }
+    public JComboBox<String> getKeyLength_field() { return keyLength_field; }
+    public JTextField getInput() { return input; }
+    public JTextField getPublicKey_field() { return publicKey_field; }
+    public JTextField getPrivateKey_field() { return privateKey_field; }
+
+    public JButton getBtnSign() {
+        return btnSign;
+    }
+
+    public static void main(String[] args) {
+        new SignView();
+    }
+}
