@@ -146,37 +146,37 @@
             });
         });
 
-        <%--// Xử lý xác nhận chữ ký--%>
-        <%--document.getElementById('confirm-signature').addEventListener('click', () => {--%>
-        <%--    const signatureInput = document.getElementById('signature-input').value;--%>
-        <%--    const signatureFile = document.getElementById('signature-file').files[0];--%>
-        <%--    if (!signatureInput && !signatureFile) {--%>
-        <%--        document.getElementById('signature-status').innerHTML = '<p class="text-danger">Vui lòng nhập mã chữ ký số hoặc tải file!</p>';--%>
-        <%--        return;--%>
-        <%--    }--%>
+        // Xử lý xác nhận chữ ký--%>
+        document.getElementById('confirm-signature').addEventListener('click', () => {
+            const signatureInput = document.getElementById('signature-input').value;
+           const signatureFile = document.getElementById('signature-file').files[0];
+          if (!signatureInput && !signatureFile) {
+             document.getElementById('signature-status').innerHTML = '<p class="text-danger">Vui lòng nhập mã chữ ký số hoặc tải file!</p>';
+               return;
+           }
 
-        <%--    // Gửi dữ liệu chữ ký đến server (ví dụ minh họa)--%>
-        <%--    const formData = new FormData();--%>
-        <%--    formData.append('signatureInput', signatureInput);--%>
-        <%--    if (signatureFile) formData.append('signatureFile', signatureFile);--%>
-        <%--    formData.append('invoiceId', '12345');--%>
+           // Gửi dữ liệu chữ ký đến server (ví dụ minh họa)
+           const formData = new FormData();
+           formData.append('signatureInput', signatureInput);
+           if (signatureFile) formData.append('signatureFile', signatureFile);
+           formData.append('invoiceId', '12345');
 
-        <%--    fetch('${pageContext.request.contextPath}/saveSignature', {--%>
-        <%--        method: 'POST',--%>
-        <%--        body: formData--%>
-        <%--    }).then(response => response.json()).then(data => {--%>
-        <%--        document.getElementById('signature-status').innerHTML = '<p class="text-success">Chữ ký đã được xác nhận!</p>';--%>
-        <%--    }).catch(error => {--%>
-        <%--        document.getElementById('signature-status').innerHTML = '<p class="text-danger">Lỗi khi xác nhận chữ ký!</p>';--%>
-        <%--    });--%>
-        <%--});--%>
+           fetch('${pageContext.request.contextPath}/completeOrder', {
+               method: 'POST',
+               body: formData
+           }).then(response => response.json()).then(data => {
+               document.getElementById('signature-status').innerHTML = '<p class="text-success">Chữ ký đã được xác nhận!</p>';
+           }).catch(error => {
+               document.getElementById('signature-status').innerHTML = '<p class="text-danger">Lỗi khi xác nhận chữ ký!</p>';
+           });
+        });
 
-        <%--// Xử lý hủy chữ ký--%>
-        <%--document.getElementById('cancel-signature').addEventListener('click', () => {--%>
-        <%--    document.getElementById('signature-input').value = '';--%>
-        <%--    document.getElementById('signature-file').value = '';--%>
-        <%--    document.getElementById('signature-status').innerHTML = '<p class="text-info">Đã hủy chữ ký.</p>';--%>
-        <%--});--%>
+        // Xử lý hủy chữ ký
+        document.getElementById('cancel-signature').addEventListener('click', () => {
+           document.getElementById('signature-input').value = '';
+           document.getElementById('signature-file').value = '';
+           document.getElementById('signature-status').innerHTML = '<p class="text-info">Đã hủy chữ ký.</p>';
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     </body>

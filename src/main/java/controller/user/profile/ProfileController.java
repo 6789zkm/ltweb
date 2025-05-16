@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import repository.user.UserRepository;
+import service.user.UserService;
 
 @WebServlet("/edit_profile")
 public class ProfileController extends HttpServlet {
@@ -43,9 +44,12 @@ public class ProfileController extends HttpServlet {
 				session.setAttribute("address", address);
 			}
 
-			req.getRequestDispatcher("/sendOtpProfile").forward(req, resp);
-			System.out.println(idUser);
-			System.out.println(phone);
+
+			UserService userService = new UserService();
+			userService.changeUserInfo(name, phone, email, address, idUser_convert);
+			User user = userRepo.getUserById(idUser_convert);
+			session.setAttribute("user", user);
+			resp.sendRedirect(req.getContextPath()+"/profile");
 
 //			req.getRequestDispatcher(req.getContextPath() + "/profile").forward(req, resp);
 		} catch (NumberFormatException nfe) {

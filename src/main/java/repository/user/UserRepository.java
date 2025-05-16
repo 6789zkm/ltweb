@@ -12,6 +12,7 @@ import dbConnection.DBConnection;
 import dto.response.AdminUserResponse;
 import entity.Role;
 import entity.User;
+import utils.HashUtils;
 
 public class UserRepository {
 	Connection connection = null;
@@ -856,6 +857,7 @@ public class UserRepository {
 			// Câu lệnh SQL để thêm user
 			String sqlUser = "INSERT INTO ecommerce.user (email, phone, address, password, ecommerce.user.name, create_at) "
 					+ "VALUES (?, ?, ?, ?, ?, DATE(NOW()))";
+			password = HashUtils.hashPass(password);
 			pstUser = connection.prepareStatement(sqlUser);
 			pstUser.setString(1, email);
 			pstUser.setString(2, phone);
@@ -950,6 +952,7 @@ public class UserRepository {
 			// Câu lệnh SQL để gán quyền
 			String sqlSignup = "INSERT INTO `user`(`email`, `password`, `create_at`) VALUES (?,?,?)";
 			pstSignup = connection.prepareStatement(sqlSignup);
+			password = HashUtils.hashPass(password);
 			pstSignup.setString(1, username);
 			pstSignup.setString(2, password);
 			pstSignup.setString(3, LocalDate.now().toString());
@@ -980,14 +983,25 @@ public class UserRepository {
 			connection = DBConnection.getConection();
 
 			// Câu lệnh SQL để kiểm tra tài khoản
-			String sqlLogin = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?";
+			String sqlLogin = "SELECT * FROM `user` WHERE `email` = ?";
 			pstLogin = connection.prepareStatement(sqlLogin);
+
 			pstLogin.setString(1, username);
-			pstLogin.setString(2, password);
+			String hashedPassword = HashUtils.hashPass(password);
+
 
 			rs = pstLogin.executeQuery();
 
-			return rs.next(); // Trả về true nếu tìm thấy bản ghi phù hợp
+			if (rs.next()) {
+				String storedPassword = rs.getString("password");
+				if (storedPassword.equals(hashedPassword)) {
+					return true; // Đăng nhập thành công
+				} else {
+					return false; // Mật khẩu không đúng
+				}
+			} else {
+				return false; // Tài khoản không tồn tại
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

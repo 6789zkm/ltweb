@@ -2,6 +2,7 @@ package controller.user.bill;
 
 import dto.response.AdminOrderResponse;
 import dto.response.DetailCartResponse;
+import entity.Bill;
 import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,6 +38,7 @@ public class BillView extends HttpServlet {
         req.setAttribute("customerAddress", customerAddress);
         req.setAttribute("customerPhone", customerPhone);
 //        resp.sendRedirect(req.getContextPath() + "/view/user/bill.jsp");
+        req.getSession().setAttribute("bill", new Bill(selectedProducts, customerName, customerAddress, customerPhone));
         req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
     }
 

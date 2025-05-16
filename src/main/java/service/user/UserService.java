@@ -36,6 +36,14 @@ public class UserService {
 		}
 		userRepository.changeEmailUser(user, newEmail);
 	}
+
+	public void changeUserInfo(String name, String phone, String email, String address, Long idUser) {
+		User user = userRepository.getUserById(idUser);
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		userRepository.changeInformationUserById(name, email, phone,  address, idUser);
+	}
 	
 	
 }
