@@ -255,6 +255,91 @@ public class OrderRepository {
 		return res;
 	}
 
+	public List<AdminOrderResponse> getAllOrderWithPending(Long id) {
+		List<AdminOrderResponse> list = new ArrayList<>();
+		connection = DBConnection.getConection();
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign " +
+				"FROM ecommerce.`order` o " +
+				"INNER JOIN order_detail od ON od.order_id = o.id " +
+				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
+				"INNER JOIN product_color_img pci ON pci.id = ps.product_color_img_id " +
+				"INNER JOIN product p ON p.id = pci.product_id " +
+				"WHERE o.user_id = ? and o.order_status = 'ĐANG_CHỜ' ";
+		try {
+			pst = connection.prepareStatement(sql);
+			pst.setLong(1, id);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+				list.add(aor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeConnection(connection);
+		}
+		return list;
+	}
 
+	public List<AdminOrderResponse> getAllOrderWithCancle(Long id) {
+		List<AdminOrderResponse> list = new ArrayList<>();
+		connection = DBConnection.getConection();
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign " +
+				"FROM ecommerce.`order` o " +
+				"INNER JOIN order_detail od ON od.order_id = o.id " +
+				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
+				"INNER JOIN product_color_img pci ON pci.id = ps.product_color_img_id " +
+				"INNER JOIN product p ON p.id = pci.product_id " +
+				"WHERE o.user_id = ? and o.order_status = 'ĐÃ_HỦY'";
+		try {
+			pst = connection.prepareStatement(sql);
+			pst.setLong(1, id);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+				list.add(aor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeConnection(connection);
+		}
+		return list;
+	}
 
+	public List<AdminOrderResponse> getAllOrderWithSuccess(Long id) {
+		List<AdminOrderResponse> list = new ArrayList<>();
+		connection = DBConnection.getConection();
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign " +
+				"FROM ecommerce.`order` o " +
+				"INNER JOIN order_detail od ON od.order_id = o.id " +
+				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
+				"INNER JOIN product_color_img pci ON pci.id = ps.product_color_img_id " +
+				"INNER JOIN product p ON p.id = pci.product_id " +
+				"WHERE o.user_id = ? and o.order_status = 'ĐÃ_HOÀN_THÀNH'";
+		try {
+			pst = connection.prepareStatement(sql);
+			pst.setLong(1, id);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+				list.add(aor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeConnection(connection);
+		}
+		return list;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new OrderRepository().getAllOrderWithPending((long) 12));
+		System.out.println(new OrderRepository().getAllOrderWithCancle((long) 12));
+		System.out.println(new OrderRepository().getAllOrderWithSuccess((long) 12));
+
+	}
 }

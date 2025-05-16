@@ -61,7 +61,7 @@
 							<a href = "${pageContext.request.contextPath}/view/user/forgot_password.jsp"><button
 									style="color: white; width: 100%; height: 40px; margin-bottom: 0.5rem; font-size: 15px; background-color: black;">
 								Đổi mật khẩu</button></a>
-							<a href = "<%=request.getContextPath()%>/historyOfOrder"><button
+							<a href = "<%=request.getContextPath()%>/historyOrder"><button
 									style="color: white; width: 100%; height: 40px; margin-bottom: 0.5rem; font-size: 15px; background-color: black;">
 								Lịch sử mua hàng</button></a>
 							<a href = "<c:url value='/logout' />"><button
