@@ -1,8 +1,10 @@
 package controller.user.bill;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
+import com.google.gson.Gson;
 import dto.request.OrderRequest;
 import dto.response.DetailCartResponse;
 import entity.User;
@@ -27,13 +29,15 @@ public class CompleteOrder extends HttpServlet {
         String customerEmail = user.getEmail();
         double totalPrice = 0;
 
+        String encodedCartIds = (String) getServletContext().getAttribute("selectedCartIds");
+        // Giải mã URL
+        String decodedCartIds = URLDecoder.decode(encodedCartIds, "UTF-8");
+        System.out.println(decodedCartIds);
+        String[] selectedCartIds = new Gson().fromJson(decodedCartIds, String[].class);
+
+
         for (DetailCartResponse product : selectedProducts) {
             totalPrice += product.getPrice() * product.getQuantity();
-        }
-
-        String[] cartIds = new String[selectedProducts.size()];
-        for (int i = 0; i < selectedProducts.size(); i++) {
-            cartIds[i] = Long.toString(selectedProducts.get(i).getCartId());
         }
 
         orderService.processOrderItems(user, new OrderRequest(
@@ -42,8 +46,10 @@ public class CompleteOrder extends HttpServlet {
             customerEmail,
             customerPhone,
             customerAddress,
-            cartIds
+                selectedCartIds
         ), req, resp);
+        getServletContext().removeAttribute("selectedCartIds");
+        getServletContext().removeAttribute("outOfStockProducts");
         req.getSession().removeAttribute("selectedProducts");
         resp.sendRedirect(req.getContextPath() + "/view/user/successOrder.jsp");
     }

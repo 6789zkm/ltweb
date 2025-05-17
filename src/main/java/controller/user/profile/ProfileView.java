@@ -2,6 +2,8 @@ package controller.user.profile;
 
 import java.io.IOException;
 
+import dao.PublicKeyStorageDB;
+import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ProfileView extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		req.getRequestDispatcher("view/user/profile.jsp").forward(req, resp);
 	}
 	

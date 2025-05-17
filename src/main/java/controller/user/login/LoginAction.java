@@ -1,5 +1,6 @@
 package controller.user.login;
 
+import dao.PublicKeyStorageDB;
 import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,6 +39,8 @@ public class LoginAction extends HttpServlet {
 
         if (userRepository.login(username, passwordHash)) {
             User user = userRepository.getUserByEmail(username);
+            String publicKey = PublicKeyStorageDB.getPublicKey(user);
+            user.setKey(publicKey);
             session.setAttribute("user", user);
 
             cartDetailService.mergeCartAfterLogin(req, user, resp);
