@@ -110,7 +110,10 @@
             <div class="col-md-4">
                 <div class="signature-frame">
                     <h3>Chữ ký số</h3>
-                    <button id="download-invoice" class="btn btn-primary mb-3">Tải hóa đơn (PDF)</button>
+                    <div class="mb-3">
+                        <label for="signature-input" class="form-label">Mã hóa đơn</label>
+                        <input type="text" class="form-control" value="${bill.encode()}" readonly>
+                    </div>
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Nhập mã chữ ký số hoặc tải file</label>
                         <input type="text" class="form-control" id="signature-input" placeholder="Nhập mã chữ ký số">
@@ -129,23 +132,7 @@
     <jsp:include page="footer.jsp"></jsp:include>
 
     <script>
-        // Tạo PDF từ hóa đơn
-        document.getElementById('download-invoice').addEventListener('click', () => {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const invoiceContainer = document.querySelector('.invoice-container');
-
-            // Sử dụng html2canvas để chuyển đổi phần tử HTML thành canvas
-            html2canvas(invoiceContainer).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 210; // Chiều rộng trang A4
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-                doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-                doc.save('invoice_12345.pdf');
-            });
-        });
-
+    
         // Xử lý xác nhận chữ ký--%>
         document.getElementById('confirm-signature').addEventListener('click', () => {
             const signatureInput = document.getElementById('signature-input').value;

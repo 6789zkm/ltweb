@@ -265,7 +265,7 @@ public class CartDetailService {
 			Product product = productColorImg.getProduct();
 
 			// Nếu sản phẩm chưa có trong giỏ hàng, tạo CartDetail mới
-			DetailCartResponse detailCart = new DetailCartResponse(productSku.getId(), product.getName(),
+			DetailCartResponse detailCart = new DetailCartResponse(productSku.getId(), productSku.getId(), product.getName(),
 					productColorImg.getImage(), productColorImg.getColor().getName(), productSku.getSize().getName(),
 					productRequest.getQuantity(), productSku.getPrice());
 			detailCarts.add(detailCart);

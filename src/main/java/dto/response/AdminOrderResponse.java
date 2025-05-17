@@ -1,7 +1,10 @@
 package dto.response;
 
-public class AdminOrderResponse {
+import entity.IOrderResponse;
+
+public class AdminOrderResponse implements IOrderResponse {
 	private long id_order_admin;
+	private long productSkuId;
 	private String name_customer;
 	private String name_product;
 	private int quantity_order;
@@ -10,8 +13,9 @@ public class AdminOrderResponse {
 	private String date_order;
 	private String status;
 	private String sign;
-	public AdminOrderResponse(long id_order_admin, String name_customer, String name_product, int quantity_order,
-							  double price, String address, String date_order ,String status, String sign) {
+	private String phone;
+	public AdminOrderResponse(long id_order_admin, long productSkuId, String name_customer, String name_product, int quantity_order,
+							  double price, String address, String date_order ,String status, String sign, String phone) {
 		super();
 		this.id_order_admin = id_order_admin;
 		this.name_customer = name_customer;
@@ -22,7 +26,10 @@ public class AdminOrderResponse {
 		this.date_order = date_order;
 		this.status = status;
 		this.sign = sign;
+		this.productSkuId = productSkuId;
+		this.phone = phone;
 	}
+
 	public long getId_order_admin() {
 		return id_order_admin;
 	}
@@ -41,6 +48,9 @@ public class AdminOrderResponse {
 	public String getStatus() {
 		return status;
 	}
+	public String getPhone() {
+		return phone;
+	}
 	public String getAddress() {return address;}
 	public String getDate_order() {return date_order;}
 	public String getSign() {return sign;}
@@ -50,6 +60,13 @@ public class AdminOrderResponse {
 				+ ", name_product=" + name_product + ", quantity_order=" + quantity_order + ", price=" + price
 				+ ", address=" + address + ", date=" + date_order +", status=" + status + ",sign=" + sign + "]";
 	}
-
+	@Override
+	public long getProductSkuId() {
+		return productSkuId;
+	}
+	@Override
+	public int getQuantity() {
+		return quantity_order;
+	}
 
 }

@@ -54,10 +54,10 @@ public class SecurityFilterRoleLoginController implements Filter {
 		}
 
 		// Nếu user không phải admin
-		if (user_role == null || "USER".equalsIgnoreCase(user_role.getRole().getNameRole())) {
-			response.sendRedirect(request.getContextPath() + "/view/not_permission.jsp");
-			return;
-		}
+//		if (user_role == null || "USER".equalsIgnoreCase(user_role.getRole().getNameRole())) {
+//			response.sendRedirect(request.getContextPath() + "/view/not_permission.jsp");
+//			return;
+//		}
 
 		// Nếu user là admin và đang truy cập đúng trang, tiếp tục xử lý
 		filterChain.doFilter(request, response);

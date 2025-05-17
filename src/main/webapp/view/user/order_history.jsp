@@ -71,7 +71,7 @@
                         <c:when test="${order.id_order_admin != currentOrderId}">
                             <c:if test="${!loop.first}">
                                 <tr>
-                                    <td>${currentOrderId}</td>
+                                    <td>${currentOrderId} - ${orderBillMap.get(currentOrderId).encode()}</td>
                                     <td>${prevOrder.name_customer}</td>
                                     <td class="order-items">
                                         <ul>${productList}</ul>
@@ -141,7 +141,7 @@
                         <c:when test="${order.id_order_admin != currentOrderId}">
                             <c:if test="${!loop.first}">
                                 <tr>
-                                    <td>${currentOrderId}</td>
+                                    <td>${currentOrderId} - ${orderBillMap.get(currentOrderId).encode()}</td>
                                     <td>${prevOrder.name_customer}</td>
                                     <td class="order-items">
                                         <ul>${productList}</ul>
@@ -211,7 +211,7 @@
                         <c:when test="${order.id_order_admin != currentOrderId}">
                             <c:if test="${!loop.first}">
                                 <tr>
-                                    <td>${currentOrderId}</td>
+                                    <td>${currentOrderId} - ${orderBillMap.get(currentOrderId).encode()}</td>
                                     <td>${prevOrder.name_customer}</td>
                                     <td class="order-items">
                                         <ul>${productList}</ul>

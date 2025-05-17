@@ -1,7 +1,10 @@
 package dto.response;
 
-public class DetailCartResponse {
+import entity.IOrderResponse;
+
+public class DetailCartResponse implements IOrderResponse {
 	private Long cartId;
+	private Long productSkuId;
 	private String name;
 	private String image;
 	private String color;
@@ -15,7 +18,7 @@ public class DetailCartResponse {
 	}
 
 
-	public DetailCartResponse(Long cartId, String name, String image, String color, String size, int quantity,
+	public DetailCartResponse(Long cartId, Long productSkuId, String name, String image, String color, String size, int quantity,
 			double price) {
 		super();
 		this.cartId = cartId;
@@ -25,6 +28,7 @@ public class DetailCartResponse {
 		this.size = size;
 		this.quantity = quantity;
 		this.price = price;
+		this.productSkuId = productSkuId;
 	}
 
 
@@ -95,6 +99,14 @@ public class DetailCartResponse {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public long getProductSkuId() {
+		return productSkuId;
+	}
+
+	public void setProductSkuId(Long productSkuId) {
+		this.productSkuId = productSkuId;
 	}
 
 

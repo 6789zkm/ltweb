@@ -609,23 +609,34 @@ public class UserRepository {
 		return null;
 	}
 
-	public User loginForAdmin(String phone, String password) {
+	public User loginForAdmin(String email, String password) {
 		connection = DBConnection.getConection();
 		try {
-			String sql = "SELECT * FROM user WHERE phone = ? and password = ? ";
-			pst = connection.prepareStatement(sql);
-			pst.setString(1, "84" + phone);
-			pst.setString(2, password);
-			ResultSet rs = pst.executeQuery();
+			String sqlLogin = "SELECT * FROM `user` WHERE `email` = ?";
+			PreparedStatement pstLogin = connection.prepareStatement(sqlLogin);
+
+			pstLogin.setString(1, email);
+			String hashedPassword = HashUtils.hashPass(password);
+
+
+			ResultSet rs = pstLogin.executeQuery();
+
 			if (rs.next()) {
-				User user = new User();
-				user.setId(rs.getLong(1));
-				user.setEmail(rs.getString(2));
-				user.setPhone(rs.getString(3));
-				user.setAddress(rs.getString(4));
-				user.setName(rs.getString(6));
-				return user;
+				String storedPassword = rs.getString("password");
+				if (storedPassword.equals(hashedPassword)) {
+					User user = new User();
+					user.setId(rs.getLong(1));
+					user.setEmail(rs.getString(2));
+					user.setPhone(rs.getString(3));
+					user.setAddress(rs.getString(4));
+					user.setName(rs.getString(6));
+				} else {
+					return null;
+				}
+			} else {
+				return null;
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

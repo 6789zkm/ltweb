@@ -49,7 +49,7 @@ public class CartDetailRepository {
 			String placeholders = String.join(", ", Collections.nCopies(selectedCartIds.length, "?"));
 
 			// Sử dụng câu truy vấn với IN
-			String sql = "SELECT c.id, p.name, pci.image, color.name AS color, size.name AS size, cd.quantity, sku.price "
+			String sql = "SELECT c.id, sku.id, p.name, pci.image, color.name AS color, size.name AS size, cd.quantity, sku.price "
 					+ "FROM cart_detail AS cd " + "INNER JOIN cart AS c ON c.id = cd.cart_id "
 					+ "INNER JOIN product_sku AS sku ON sku.id = cd.product_sku_id "
 					+ "INNER JOIN size ON size.id = sku.size_id "
@@ -67,8 +67,8 @@ public class CartDetailRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 
-				DetailCartResponse detailCartResponse = new DetailCartResponse(rs.getLong(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getDouble(7));
+				DetailCartResponse detailCartResponse = new DetailCartResponse(rs.getLong(1), rs.getLong(2), rs.getString(3),
+						rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8));
 				responses.add(detailCartResponse);
 			}
 		} catch (Exception e) {
@@ -143,7 +143,7 @@ public class CartDetailRepository {
 		connection = DBConnection.getConection();
 		List<DetailCartResponse> responses = new ArrayList<>();
 		try {
-			String sql = "SELECT  cd.id , p.name , pci.image , color.name as color , size.name  as size , cd.quantity , sku.price  FROM cart_detail as cd "
+			String sql = "SELECT  cd.id , sku.id, p.name , pci.image , color.name as color , size.name  as size , cd.quantity , sku.price  FROM cart_detail as cd "
 					+ "INNER JOIN cart AS c ON c.id = cd.cart_id "
 					+ "INNER JOIN product_sku AS sku ON sku.id = cd.product_sku_id "
 					+ "INNER JOIN size ON size.id = sku.size_id "
@@ -155,8 +155,8 @@ public class CartDetailRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 
-				DetailCartResponse detailCartResponse = new DetailCartResponse(rs.getLong(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getDouble(7));
+				DetailCartResponse detailCartResponse = new DetailCartResponse(rs.getLong(1), rs.getLong(2), rs.getString(3),
+						rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8));
 				responses.add(detailCartResponse);
 			}
 		} catch (Exception e) {

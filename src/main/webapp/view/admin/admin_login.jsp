@@ -56,7 +56,7 @@ body {
 			<div class="mb-3 mt-3">
 				<label for="phone" class="form-label">Nhập số diện thoại</label> <input
 					type="text" class="form-control" id="phone" name="phone"
-					placeholder="Your Phone Number +84" maxlength="9" required>
+					placeholder="Your Phone Number +84" required>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Nhập mật khẩu</label> <input

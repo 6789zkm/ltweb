@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th5 08, 2025 lúc 03:32 AM
--- Phiên bản máy phục vụ: 8.0.30
--- Phiên bản PHP: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: May 17, 2025 at 11:37 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,22 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `ecommerce`
+-- Database: `ecommerce`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart`
+-- Table structure for table `cart`
 --
 
 CREATE TABLE `cart` (
-  `id` int NOT NULL,
-  `user_id` int DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cart`
+-- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`id`, `user_id`) VALUES
@@ -49,36 +49,44 @@ INSERT INTO `cart` (`id`, `user_id`) VALUES
 (16, 12),
 (17, 12),
 (18, 12),
-(19, 12);
+(19, 12),
+(20, 15);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart_detail`
+-- Table structure for table `cart_detail`
 --
 
 CREATE TABLE `cart_detail` (
-  `id` int NOT NULL,
-  `cart_id` int DEFAULT NULL,
-  `product_sku_id` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `cart_id` int(11) DEFAULT NULL,
+  `product_sku_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_detail`
+--
+
+INSERT INTO `cart_detail` (`id`, `cart_id`, `product_sku_id`, `quantity`) VALUES
+(22, 20, 114, 1);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `create_at` date DEFAULT NULL,
-  `gender_id` int DEFAULT NULL
+  `gender_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `create_at`, `gender_id`) VALUES
@@ -90,17 +98,17 @@ INSERT INTO `category` (`id`, `name`, `create_at`, `gender_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `color`
+-- Table structure for table `color`
 --
 
 CREATE TABLE `color` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `code` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `color`
+-- Dumping data for table `color`
 --
 
 INSERT INTO `color` (`id`, `name`, `code`) VALUES
@@ -122,17 +130,17 @@ INSERT INTO `color` (`id`, `name`, `code`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `gender`
+-- Table structure for table `gender`
 --
 
 CREATE TABLE `gender` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `create_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `gender`
+-- Dumping data for table `gender`
 --
 
 INSERT INTO `gender` (`id`, `name`, `create_at`) VALUES
@@ -142,17 +150,17 @@ INSERT INTO `gender` (`id`, `name`, `create_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `inventory`
+-- Table structure for table `inventory`
 --
 
 CREATE TABLE `inventory` (
-  `id` int NOT NULL,
-  `product_sku_id` int DEFAULT NULL,
-  `stock` int NOT NULL
+  `id` int(11) NOT NULL,
+  `product_sku_id` int(11) DEFAULT NULL,
+  `stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `inventory`
+-- Dumping data for table `inventory`
 --
 
 INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
@@ -187,7 +195,7 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 (85, 92, 5),
 (86, 93, 5),
 (87, 94, 10),
-(88, 95, 12),
+(88, 95, 10),
 (89, 96, 12),
 (90, 97, 12),
 (91, 98, 12),
@@ -713,64 +721,67 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `order`
+-- Table structure for table `order`
 --
 
 CREATE TABLE `order` (
-  `id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `order_status` enum('ĐANG_CHỜ','ĐÃ_HOÀN_THÀNH','ĐÃ_HỦY') NOT NULL,
   `total_price` float NOT NULL,
   `create_at` date DEFAULT NULL,
   `customer_email` varchar(255) DEFAULT NULL,
   `customer_name` varchar(255) DEFAULT NULL,
   `customer_phone` varchar(255) DEFAULT NULL,
-  `customer_address` text
+  `customer_address` text DEFAULT NULL,
+  `sign` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `order`
+-- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `user_id`, `order_status`, `total_price`, `create_at`, `customer_email`, `customer_name`, `customer_phone`, `customer_address`) VALUES
-(49, NULL, 'ĐANG_CHỜ', 540000, '2025-05-08', '', 'Pham Quoc Khanh', '0565522023', 'Thị xã Dĩ An');
+INSERT INTO `order` (`id`, `user_id`, `order_status`, `total_price`, `create_at`, `customer_email`, `customer_name`, `customer_phone`, `customer_address`, `sign`) VALUES
+(49, NULL, 'ĐANG_CHỜ', 540000, '2025-05-08', '', 'Pham Quoc Khanh', '0565522023', 'Thị xã Dĩ An', NULL),
+(54, 15, 'ĐANG_CHỜ', 784000, '2025-05-17', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `order_detail`
+-- Table structure for table `order_detail`
 --
 
 CREATE TABLE `order_detail` (
-  `id` int NOT NULL,
-  `order_id` int DEFAULT NULL,
-  `product_sku_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `product_sku_id` int(11) DEFAULT NULL,
   `price` float NOT NULL,
-  `quantity` int NOT NULL
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `order_detail`
+-- Dumping data for table `order_detail`
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_sku_id`, `price`, `quantity`) VALUES
-(47, 49, 472, 540000, 1);
+(47, 49, 472, 540000, 1),
+(49, 54, 95, 392000, 2);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text,
-  `sub_category_id` int DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `sub_category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `sub_category_id`) VALUES
@@ -909,18 +920,18 @@ INSERT INTO `product` (`id`, `name`, `description`, `sub_category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_color_img`
+-- Table structure for table `product_color_img`
 --
 
 CREATE TABLE `product_color_img` (
-  `id` int NOT NULL,
-  `product_id` int DEFAULT NULL,
-  `color_id` int DEFAULT NULL,
-  `image` mediumtext
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `color_id` int(11) DEFAULT NULL,
+  `image` mediumtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product_color_img`
+-- Dumping data for table `product_color_img`
 --
 
 INSERT INTO `product_color_img` (`id`, `product_id`, `color_id`, `image`) VALUES
@@ -1149,18 +1160,18 @@ INSERT INTO `product_color_img` (`id`, `product_id`, `color_id`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_sku`
+-- Table structure for table `product_sku`
 --
 
 CREATE TABLE `product_sku` (
-  `id` int NOT NULL,
-  `product_color_img_id` int DEFAULT NULL,
-  `size_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `product_color_img_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product_sku`
+-- Dumping data for table `product_sku`
 --
 
 INSERT INTO `product_sku` (`id`, `product_color_img_id`, `size_id`, `price`) VALUES
@@ -1721,17 +1732,36 @@ INSERT INTO `product_sku` (`id`, `product_color_img_id`, `size_id`, `price`) VAL
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `role`
+-- Table structure for table `publickeystorage`
+--
+
+CREATE TABLE `publickeystorage` (
+  `userID` int(11) NOT NULL,
+  `publicKey` text NOT NULL,
+  `updateAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `publickeystorage`
+--
+
+INSERT INTO `publickeystorage` (`userID`, `publicKey`, `updateAt`) VALUES
+(15, 'dsadasdad', '2025-05-17 08:38:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
 --
 
 CREATE TABLE `role` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `create_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `role`
+-- Dumping data for table `role`
 --
 
 INSERT INTO `role` (`id`, `name`, `create_at`) VALUES
@@ -1742,17 +1772,17 @@ INSERT INTO `role` (`id`, `name`, `create_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `size`
+-- Table structure for table `size`
 --
 
 CREATE TABLE `size` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `size_type_id` int DEFAULT NULL
+  `size_type_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `size`
+-- Dumping data for table `size`
 --
 
 INSERT INTO `size` (`id`, `name`, `size_type_id`) VALUES
@@ -1770,16 +1800,16 @@ INSERT INTO `size` (`id`, `name`, `size_type_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `size_type`
+-- Table structure for table `size_type`
 --
 
 CREATE TABLE `size_type` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `size_type`
+-- Dumping data for table `size_type`
 --
 
 INSERT INTO `size_type` (`id`, `name`) VALUES
@@ -1789,17 +1819,17 @@ INSERT INTO `size_type` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sub_category`
+-- Table structure for table `sub_category`
 --
 
 CREATE TABLE `sub_category` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `category_id` int DEFAULT NULL
+  `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `sub_category`
+-- Dumping data for table `sub_category`
 --
 
 INSERT INTO `sub_category` (`id`, `name`, `category_id`) VALUES
@@ -1823,14 +1853,14 @@ INSERT INTO `sub_category` (`id`, `name`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `create_at` date DEFAULT NULL,
@@ -1838,47 +1868,49 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `phone`, `address`, `password`, `name`, `create_at`, `update_at`) VALUES
 (5, NULL, '84111111111', NULL, '123', NULL, NULL, NULL),
 (12, 'phamquockhanh0812@gmail.com', '84111111115', 'abc', NULL, 'Quốc Khánh', NULL, NULL),
-(14, 'H@gmail.com', '84567567567', '123ASSD', 'agr', '123', '2025-01-13', NULL);
+(14, 'H@gmail.com', '84567567567', '123ASSD', 'agr', '123', '2025-01-13', NULL),
+(15, 'khachhang4@gmail.com', '8400932141', 'Thanh Sao Vuong', 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', 'Khach Hang 4', '2025-05-16', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user_role`
+-- Table structure for table `user_role`
 --
 
 CREATE TABLE `user_role` (
-  `id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `role_id` int DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `user_role`
+-- Dumping data for table `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 (2, 5, 1),
-(7, 14, 3);
+(7, 14, 3),
+(8, 15, 2);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `cart`
+-- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Chỉ mục cho bảng `cart_detail`
+-- Indexes for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
   ADD PRIMARY KEY (`id`),
@@ -1886,40 +1918,40 @@ ALTER TABLE `cart_detail`
   ADD KEY `product_sku_id` (`product_sku_id`);
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `gender_id` (`gender_id`);
 
 --
--- Chỉ mục cho bảng `color`
+-- Indexes for table `color`
 --
 ALTER TABLE `color`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `gender`
+-- Indexes for table `gender`
 --
 ALTER TABLE `gender`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `inventory`
+-- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_sku_id` (`product_sku_id`);
 
 --
--- Chỉ mục cho bảng `order`
+-- Indexes for table `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Chỉ mục cho bảng `order_detail`
+-- Indexes for table `order_detail`
 --
 ALTER TABLE `order_detail`
   ADD PRIMARY KEY (`id`),
@@ -1927,14 +1959,14 @@ ALTER TABLE `order_detail`
   ADD KEY `product_sku_id` (`product_sku_id`);
 
 --
--- Chỉ mục cho bảng `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sub_category_id` (`sub_category_id`);
 
 --
--- Chỉ mục cho bảng `product_color_img`
+-- Indexes for table `product_color_img`
 --
 ALTER TABLE `product_color_img`
   ADD PRIMARY KEY (`id`),
@@ -1942,7 +1974,7 @@ ALTER TABLE `product_color_img`
   ADD KEY `color_id` (`color_id`);
 
 --
--- Chỉ mục cho bảng `product_sku`
+-- Indexes for table `product_sku`
 --
 ALTER TABLE `product_sku`
   ADD PRIMARY KEY (`id`),
@@ -1950,39 +1982,45 @@ ALTER TABLE `product_sku`
   ADD KEY `size_id` (`size_id`);
 
 --
--- Chỉ mục cho bảng `role`
+-- Indexes for table `publickeystorage`
+--
+ALTER TABLE `publickeystorage`
+  ADD PRIMARY KEY (`userID`);
+
+--
+-- Indexes for table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `size`
+-- Indexes for table `size`
 --
 ALTER TABLE `size`
   ADD PRIMARY KEY (`id`),
   ADD KEY `size_ibfk_1` (`size_type_id`);
 
 --
--- Chỉ mục cho bảng `size_type`
+-- Indexes for table `size_type`
 --
 ALTER TABLE `size_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `sub_category`
+-- Indexes for table `sub_category`
 --
 ALTER TABLE `sub_category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `user_role`
+-- Indexes for table `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`),
@@ -1990,187 +2028,187 @@ ALTER TABLE `user_role`
   ADD KEY `role_id` (`role_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `cart`
+-- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `cart_detail`
+-- AUTO_INCREMENT for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `color`
+-- AUTO_INCREMENT for table `color`
 --
 ALTER TABLE `color`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT cho bảng `gender`
+-- AUTO_INCREMENT for table `gender`
 --
 ALTER TABLE `gender`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `inventory`
+-- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=616;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=616;
 
 --
--- AUTO_INCREMENT cho bảng `order`
+-- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
--- AUTO_INCREMENT cho bảng `order_detail`
+-- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT cho bảng `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
 
 --
--- AUTO_INCREMENT cho bảng `product_color_img`
+-- AUTO_INCREMENT for table `product_color_img`
 --
 ALTER TABLE `product_color_img`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
 
 --
--- AUTO_INCREMENT cho bảng `product_sku`
+-- AUTO_INCREMENT for table `product_sku`
 --
 ALTER TABLE `product_sku`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=623;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=623;
 
 --
--- AUTO_INCREMENT cho bảng `role`
+-- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `size`
+-- AUTO_INCREMENT for table `size`
 --
 ALTER TABLE `size`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `size_type`
+-- AUTO_INCREMENT for table `size_type`
 --
 ALTER TABLE `size_type`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `sub_category`
+-- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT cho bảng `user_role`
+-- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `cart`
+-- Constraints for table `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Các ràng buộc cho bảng `cart_detail`
+-- Constraints for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
   ADD CONSTRAINT `cart_detail_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`),
   ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`product_sku_id`) REFERENCES `product_sku` (`id`);
 
 --
--- Các ràng buộc cho bảng `category`
+-- Constraints for table `category`
 --
 ALTER TABLE `category`
   ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`gender_id`) REFERENCES `gender` (`id`);
 
 --
--- Các ràng buộc cho bảng `inventory`
+-- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`product_sku_id`) REFERENCES `product_sku` (`id`);
 
 --
--- Các ràng buộc cho bảng `order`
+-- Constraints for table `order`
 --
 ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Các ràng buộc cho bảng `order_detail`
+-- Constraints for table `order_detail`
 --
 ALTER TABLE `order_detail`
   ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
   ADD CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`product_sku_id`) REFERENCES `product_sku` (`id`);
 
 --
--- Các ràng buộc cho bảng `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`);
 
 --
--- Các ràng buộc cho bảng `product_color_img`
+-- Constraints for table `product_color_img`
 --
 ALTER TABLE `product_color_img`
   ADD CONSTRAINT `product_color_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `product_color_img_ibfk_2` FOREIGN KEY (`color_id`) REFERENCES `color` (`id`);
 
 --
--- Các ràng buộc cho bảng `product_sku`
+-- Constraints for table `product_sku`
 --
 ALTER TABLE `product_sku`
   ADD CONSTRAINT `product_sku_ibfk_1` FOREIGN KEY (`product_color_img_id`) REFERENCES `product_color_img` (`id`),
   ADD CONSTRAINT `product_sku_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `size` (`id`);
 
 --
--- Các ràng buộc cho bảng `size`
+-- Constraints for table `size`
 --
 ALTER TABLE `size`
   ADD CONSTRAINT `size_ibfk_1` FOREIGN KEY (`size_type_id`) REFERENCES `size_type` (`id`);
 
 --
--- Các ràng buộc cho bảng `sub_category`
+-- Constraints for table `sub_category`
 --
 ALTER TABLE `sub_category`
   ADD CONSTRAINT `sub_category_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Các ràng buộc cho bảng `user_role`
+-- Constraints for table `user_role`
 --
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
