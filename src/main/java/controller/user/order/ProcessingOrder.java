@@ -58,7 +58,7 @@ public class ProcessingOrder extends HttpServlet {
 			return;
 
 		}
-		orderService.processOrderItems(user, orderRequest, req, resp);
+		orderService.processOrderItems(user, orderRequest, req, resp, "");
 		getServletContext().removeAttribute("selectedCartIds");
 		getServletContext().removeAttribute("outOfStockProducts");
 		req.getRequestDispatcher("view/user/successOrder.jsp").forward(req, resp);

@@ -32,10 +32,14 @@ public class CompleteOrder extends HttpServlet {
         String encodedCartIds = (String) getServletContext().getAttribute("selectedCartIds");
         // Giải mã URL
         String decodedCartIds = URLDecoder.decode(encodedCartIds, "UTF-8");
-        System.out.println(decodedCartIds);
         String[] selectedCartIds = new Gson().fromJson(decodedCartIds, String[].class);
 
-
+        String sign = (String) req.getParameter("signatureInput");
+        if (sign == null || sign.isEmpty()) {
+            req.setAttribute("error", "Please sign the order.");
+            req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
+            return;
+        }
         for (DetailCartResponse product : selectedProducts) {
             totalPrice += product.getPrice() * product.getQuantity();
         }
@@ -47,10 +51,10 @@ public class CompleteOrder extends HttpServlet {
             customerPhone,
             customerAddress,
                 selectedCartIds
-        ), req, resp);
+        ), req, resp, sign);
         getServletContext().removeAttribute("selectedCartIds");
         getServletContext().removeAttribute("outOfStockProducts");
         req.getSession().removeAttribute("selectedProducts");
-        resp.sendRedirect(req.getContextPath() + "/view/user/successOrder.jsp");
+        resp.sendRedirect(req.getContextPath() + "/successOrder");
     }
 }

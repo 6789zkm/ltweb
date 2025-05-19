@@ -31,19 +31,19 @@ public class OrderService {
 	private CartDetailRepository cartDetailRepository = new CartDetailRepository();
 
 	public void processOrderItems(User user, OrderRequest orderRequest, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, String sign) {
 		Connection connection = null;
 		try {
 			// Tạo đơn hàng
 			connection = DBConnection.getConection();
-			Long orderId = orderRepository.createOrder(connection, orderRequest, user);
+			Long orderId = orderRepository.createOrder(connection, orderRequest, user, sign);
 			if (orderId == 0) {
 				throw new RuntimeException("Cannot create order");
 			}
 			if (user == null) {
 				createOrderDetailForAnonymous(connection, orderId, orderRequest, request, response);
 			} else {
-				createOrderDetailInDatabase(connection, orderId, orderRequest.getIds());
+				createOrderDetailInDatabase(connection, orderId, orderRequest.getIds(), sign);
 			}
 			// Hoàn tất giao dịch
 			orderRepository.finalizeTransaction(connection);
@@ -55,7 +55,7 @@ public class OrderService {
 	}
 
 	// tao don dat hang cho nguoi dung da dang nhap
-	private void createOrderDetailInDatabase(Connection connection, Long orderId, String[] cartDetailIds) {
+	private void createOrderDetailInDatabase(Connection connection, Long orderId, String[] cartDetailIds, String sign) {
 		for (int i = 0; i < cartDetailIds.length; i++) {
 			Long cartId = Long.parseLong(cartDetailIds[i]);
 			CartDetail cartDetail = cartDetailRepository.findById(cartId).orElseThrow();
@@ -69,6 +69,7 @@ public class OrderService {
 			orderDetail.setProductSkuId(productSku.getId());
 			orderDetail.setPrice(productSku.getPrice());
 			orderDetail.setQuantity(cartDetail.getQuantity());
+			orderDetail.setSign(sign);
 
 			// cập nhật hàng tồn kho trong kho hàng
 			Inventory invetory = inventoryRepository.findByProductSkuId(productSku.getId()).get();

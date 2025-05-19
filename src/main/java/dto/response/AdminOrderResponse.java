@@ -13,9 +13,10 @@ public class AdminOrderResponse implements IOrderResponse {
 	private String date_order;
 	private String status;
 	private String sign;
+	private String publicKey;
 	private String phone;
 	public AdminOrderResponse(long id_order_admin, long productSkuId, String name_customer, String name_product, int quantity_order,
-							  double price, String address, String date_order ,String status, String sign, String phone) {
+							  double price, String address, String date_order ,String status, String sign, String phone, String publicKey) {
 		super();
 		this.id_order_admin = id_order_admin;
 		this.name_customer = name_customer;
@@ -28,6 +29,7 @@ public class AdminOrderResponse implements IOrderResponse {
 		this.sign = sign;
 		this.productSkuId = productSkuId;
 		this.phone = phone;
+		this.publicKey = publicKey;
 	}
 
 	public long getId_order_admin() {
@@ -69,4 +71,7 @@ public class AdminOrderResponse implements IOrderResponse {
 		return quantity_order;
 	}
 
+	public String getPublicKey() {
+		return publicKey;
+	}
 }

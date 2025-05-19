@@ -3,6 +3,7 @@ package tool;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 
 public class SignView extends JFrame {
     private JLabel lb_input, lb_publicKey, lb_privateKey, lb_keyLength;
@@ -11,7 +12,7 @@ public class SignView extends JFrame {
     private JTextArea output;
     private JButton btnSign, btnGenKeyPair, btnLoadPrivateKey, btnSavePublicKey, btnSavePrivateKey, btnChooseInputFile, btnSaveResult, btnCancelKey;
 
-
+    private JButton copyToClipboard;
 
     private static final String[] RSAKeyLengths = {
             "512", "1024", "2048", "3072", "4096"
@@ -59,11 +60,27 @@ public class SignView extends JFrame {
         gbcTop.gridy = 1;
         gbcTop.weightx = 0.0;
         topPanel.add(lb_publicKey = new JLabel("Public Key:"), gbcTop);
+        
 
         gbcTop.gridx = 1;
         gbcTop.weightx = 1.0;
         topPanel.add(publicKey_field = new JTextField(), gbcTop);
 
+        gbcTop.gridx = 2;
+        gbcTop.weightx = 0.0;
+
+        copyToClipboard = new JButton("Copy to Clipboard");
+        copyToClipboard.setPreferredSize(new Dimension(120, 30));
+        copyToClipboard.addActionListener(e -> {
+            String publicKey = publicKey_field.getText();
+            if (!publicKey.isEmpty()) {
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(publicKey), null);
+                JOptionPane.showMessageDialog(this, "Public Key copied to clipboard!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Public Key is empty!");
+            }
+        });
+        topPanel.add(copyToClipboard, gbcTop);
 
         gbcTop.gridx = 3;
         gbcTop.weightx = 0.0;
@@ -199,6 +216,8 @@ public class SignView extends JFrame {
         btnSign.setEnabled(true);
         btnSaveResult.setEnabled(true);
         btnCancelKey.setEnabled(true);
+        publicKey_field.setEnabled(true);
+        privateKey_field.setEnabled(true);
     }
 
     public JButton getBtnSaveResult() { return btnSaveResult; }

@@ -189,7 +189,15 @@
 									<td>${prevOrder.date_order}</td>
 									<td><fmt:formatNumber value="${totalPrice}" pattern="#,##0"/>đ</td>
 									<td><span class="badge bg-success">${prevOrder.status}</span></td>
-									<td><span class="badge bg-success">${prevOrder.sign}</span></td>
+									<td>
+										<!-- <span class="badge bg-success">${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}</span> -->
+										<c:if test="${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}">
+											<span class="badge bg-success">Đã xác thực</span>
+										</c:if>
+										<c:if test="${!orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}">
+											<span class="badge bg-danger">Xác thực thất bại</span>
+										</c:if>
+									</td>
 									<td>
 										<form action="${pageContext.request.contextPath}/delete_order"
 											  method="POST">
