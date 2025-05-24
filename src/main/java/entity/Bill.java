@@ -84,6 +84,24 @@ public class Bill {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+    public String encodeDisplay() {
+        String encode = encode();
+
+        StringBuilder displayString = new StringBuilder();
+        // cắt nhỏ và thêm "..." vao giữa
+        int maxLength = 6; // độ dài tối đa của chuỗi hiển thị
+        if (encode.length() > maxLength) {
+            displayString.append(encode, 0, maxLength / 2)
+                    .append("...")
+                    .append(encode, encode.length() - maxLength / 2, encode.length());
+        }
+        else {
+            displayString.append(encode);
+        }
+        return displayString.toString();
+
+    }
+
     public boolean verify(String publicKey, String sign) {
         if (publicKey == null || sign == null) {
             return false;
