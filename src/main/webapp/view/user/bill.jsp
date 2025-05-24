@@ -47,14 +47,10 @@
                     </div>
 
                     <div class="invoice-client-info">
-                        <h2>${user.name || customerName}</h2>
-                        <h2>${user.address || customerAddress}</h2>
-                        <h2>${user.phone || customerPhone}</h2>
-                        <h2>${user.email}</h2>
-                        <div class="invoice-details">
-                            <p><strong>Ngày đặt hàng:</strong> <fmt:formatDate value="${aor.date_order}" pattern="MMMM dd, yyyy"/></p>
-    <%--                        <p><strong>Invoice No:</strong> 12345</p>--%>
-                        </div>
+                        <h2>Họ và tên: ${customerName}</h2>
+                        <h2>Địa chỉ: ${customerAddress}</h2>
+                        <h2>Số điện thoại: ${customerPhone}</h2>
+                        <h2>Email: ${user.email}</h2>
                     </div>
 
                     <table class="invoice-table">
@@ -93,10 +89,6 @@
     <%--                        Account No: 123567744<br>--%>
     <%--                        Routing No: 120000547--%>
                         </div>
-                        <div class="due-date">
-                            <strong>Thông tin xác thực</strong><br>
-                            ${aor.sign}
-                        </div>
                         <div class="total-due">
                             <strong>TOTAL DUE</strong><br>
                             $<fmt:formatNumber value="${totalPrice}" pattern="#,##0.00"/>
@@ -112,14 +104,18 @@
                     <h3>Xác nhận đơn hàng</h3>
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Định danh hóa đơn</label>
-                        <input type="text" class="form-control" value="${bill.encode()}" readonly>
+                        <div class="flex">
+                            <input id="billindetify" type="text" class="form-control" value="${bill.encode()}" readonly>
+                            <button type="button" class="btn btn-secondary form-control" id="copyClipboard">Copy</button>
+                        </div>
+                        
                     </div>
                     <div class="mb-3">
-                        <label for="signature-input" class="form-label">Nhập mã chữ ký số hoặc tải file</label>
+                        <label for="signature-input" class="form-label">Nhập mã chữ ký số</label>
                         <input type="text" class="form-control" id="signature-input" name="signatureInput" placeholder="Nhập mã chữ ký số">
                     </div>
                     <div class="d-flex gap-2">
-                        <button id="confirm-signature" class="btn btn-success" type="submit">Xác nhận chữ ký</button>
+                        <button id="confirm-signature" class="btn btn-success" type="submit">Xác nhận</button>
                     </div>
                     <div id="signature-status" class="mt-3"></div>
                 </form>
@@ -161,6 +157,17 @@
         //    document.getElementById('signature-file').value = '';
         //    document.getElementById('signature-status').innerHTML = '<p class="text-info">Đã hủy chữ ký.</p>';
         // });
+
+        document.getElementById('copyClipboard').addEventListener('click', function() {
+            const textToCopy = document.querySelector('#signature-input').value;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                navigator.clipboard.writeText(document.querySelector('#billindetify').value).then(function() {
+                    alert('Đã sao chép mã hóa đơn vào clipboard!');
+                }).catch(function(err) {
+                    console.error('Lỗi khi sao chép: ', err);
+                });
+            });
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     </body>

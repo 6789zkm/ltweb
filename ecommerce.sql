@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 11:37 AM
+-- Generation Time: May 24, 2025 at 10:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -64,13 +64,6 @@ CREATE TABLE `cart_detail` (
   `product_sku_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart_detail`
---
-
-INSERT INTO `cart_detail` (`id`, `cart_id`, `product_sku_id`, `quantity`) VALUES
-(22, 20, 114, 1);
 
 -- --------------------------------------------------------
 
@@ -173,11 +166,11 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 (63, 70, 5),
 (64, 71, 3),
 (65, 72, 8),
-(66, 73, 12),
+(66, 73, 11),
 (67, 74, 12),
 (68, 75, 15),
 (69, 76, 12),
-(70, 77, 15),
+(70, 77, 14),
 (71, 78, 20),
 (72, 79, 20),
 (73, 80, 20),
@@ -191,11 +184,11 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 (81, 88, 25),
 (82, 89, 3),
 (83, 90, 4),
-(84, 91, 5),
+(84, 91, 4),
 (85, 92, 5),
 (86, 93, 5),
 (87, 94, 10),
-(88, 95, 10),
+(88, 95, 9),
 (89, 96, 12),
 (90, 97, 12),
 (91, 98, 12),
@@ -205,31 +198,31 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 (95, 102, 12),
 (96, 103, 15),
 (97, 104, 15),
-(98, 105, 15),
+(98, 105, 14),
 (99, 106, 15),
 (100, 107, 15),
 (101, 108, 4),
-(102, 109, 5),
-(103, 110, 1),
+(102, 109, 4),
+(103, 110, 0),
 (104, 111, 1),
 (105, 112, 11),
 (106, 113, 5),
-(107, 114, 3),
+(107, 114, 2),
 (108, 115, 3),
 (109, 116, 3),
 (110, 117, 3),
 (111, 118, 1),
 (112, 119, 1),
-(113, 120, 11),
+(113, 120, 10),
 (114, 121, 12),
 (115, 122, 4),
 (116, 123, 4),
 (117, 124, 4),
 (118, 125, 4),
 (119, 126, 4),
-(120, 127, 4),
+(120, 127, 3),
 (121, 128, 6),
-(122, 129, 10),
+(122, 129, 9),
 (123, 130, 7),
 (124, 131, 7),
 (125, 132, 7),
@@ -264,7 +257,7 @@ INSERT INTO `inventory` (`id`, `product_sku_id`, `stock`) VALUES
 (154, 161, 4),
 (155, 162, 4),
 (156, 163, 12),
-(157, 164, 12),
+(157, 164, 11),
 (158, 165, 12),
 (159, 166, 12),
 (160, 167, 12),
@@ -734,16 +727,21 @@ CREATE TABLE `order` (
   `customer_name` varchar(255) DEFAULT NULL,
   `customer_phone` varchar(255) DEFAULT NULL,
   `customer_address` text DEFAULT NULL,
-  `sign` text DEFAULT NULL
+  `sign` text DEFAULT NULL,
+  `publicKey` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `user_id`, `order_status`, `total_price`, `create_at`, `customer_email`, `customer_name`, `customer_phone`, `customer_address`, `sign`) VALUES
-(49, NULL, 'ĐANG_CHỜ', 540000, '2025-05-08', '', 'Pham Quoc Khanh', '0565522023', 'Thị xã Dĩ An', NULL),
-(54, 15, 'ĐANG_CHỜ', 784000, '2025-05-17', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL);
+INSERT INTO `order` (`id`, `user_id`, `order_status`, `total_price`, `create_at`, `customer_email`, `customer_name`, `customer_phone`, `customer_address`, `sign`, `publicKey`) VALUES
+(49, NULL, 'ĐANG_CHỜ', 540000, '2025-05-08', '', 'Pham Quoc Khanh', '0565522023', 'Thị xã Dĩ An', NULL, NULL),
+(54, 15, 'ĐANG_CHỜ', 784000, '2025-05-17', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL, NULL),
+(55, 15, 'ĐANG_CHỜ', 1176000, '2025-05-17', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL, NULL),
+(58, 15, 'ĐANG_CHỜ', 680000, '2025-05-19', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL, NULL),
+(59, 15, 'ĐANG_CHỜ', 833000, '2025-05-19', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', NULL, NULL),
+(60, 15, 'ĐANG_CHỜ', 441000, '2025-05-19', 'khachhang4@gmail.com', 'Khach Hang 4', '8400932141', 'Thanh Sao Vuong', 'E6Hms1bv7Wv/cJK+ajYy6lCiA5cyRBvV/UOdMahiFXOV0rav2NNvDuJlgJxyAqKrV7DSSwCo8XXbiMqogx64//bT8otSfFXUYNUd7wNok1/7eqF3T7ZFdfUzd/I0s9cvXQNnnUib4R/x6maO2APq21bF0l93r/LCI9twjcPnZPb5vYm/rAJ+0ALmGJ+xxFtjCY9M4dO1uyaQPvYl5xF9u72YfigOLOq7RYNY/VL7GYOHFT7KLhxOcyA9u+vh5+eLSwNIZNVc0TZPgbXafol3qYH3RQYMS+xLjxvv6/suZSBb+ZdXavOhHXEQU1Ki3fEOBDUE6nrJQqWRg3yzqNoEVg==', 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6zcFkp+0koYhLS7bp9PvZA2uMwJ0XPApV4MmTlGu4uvrdxbhAD+zBdK0NoE75rjXTlF/Ik9/bbe/wJmRdcpNuK8txGgCEH0AXnQPgXe9QWkkYBkmpBXEl2uzfjD4yF/rfb7l7qaatnlj2B1hCsVElWTiaP0p9l4BPPN62e5U2vvtRHJC0VAzReT5IrHgmuNr9dK0JEiAIO7M/LVxogd0uTWr+gtSn/B0atEeLwRNehjS6+OvOVZZYRRovx0ueZ1n0GbzUfNG3DhImmYrSDdoa+s04bXb+2FfHdDyxd+TjnIlCID3H4L5DlgqeIodSJkBq8dZR4JjTWbCWKPUwT6nmQIDAQAB');
 
 -- --------------------------------------------------------
 
@@ -765,7 +763,13 @@ CREATE TABLE `order_detail` (
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_sku_id`, `price`, `quantity`) VALUES
 (47, 49, 472, 540000, 1),
-(49, 54, 95, 392000, 2);
+(49, 54, 95, 392000, 2),
+(50, 55, 114, 392000, 1),
+(51, 55, 105, 392000, 1),
+(52, 55, 73, 392000, 1),
+(57, 58, 164, 239000, 1),
+(58, 58, 127, 441000, 1),
+(59, 60, 129, 441000, 3);
 
 -- --------------------------------------------------------
 
@@ -1736,6 +1740,7 @@ INSERT INTO `product_sku` (`id`, `product_color_img_id`, `size_id`, `price`) VAL
 --
 
 CREATE TABLE `publickeystorage` (
+  `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `publicKey` text NOT NULL,
   `updateAt` timestamp NOT NULL DEFAULT current_timestamp()
@@ -1745,8 +1750,9 @@ CREATE TABLE `publickeystorage` (
 -- Dumping data for table `publickeystorage`
 --
 
-INSERT INTO `publickeystorage` (`userID`, `publicKey`, `updateAt`) VALUES
-(15, 'dsadasdad', '2025-05-17 08:38:19');
+INSERT INTO `publickeystorage` (`id`, `userID`, `publicKey`, `updateAt`) VALUES
+(1, 0, 'dsadasdad', '2025-05-17 08:38:19'),
+(2, 15, 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6zcFkp+0koYhLS7bp9PvZA2uMwJ0XPApV4MmTlGu4uvrdxbhAD+zBdK0NoE75rjXTlF/Ik9/bbe/wJmRdcpNuK8txGgCEH0AXnQPgXe9QWkkYBkmpBXEl2uzfjD4yF/rfb7l7qaatnlj2B1hCsVElWTiaP0p9l4BPPN62e5U2vvtRHJC0VAzReT5IrHgmuNr9dK0JEiAIO7M/LVxogd0uTWr+gtSn/B0atEeLwRNehjS6+OvOVZZYRRovx0ueZ1n0GbzUfNG3DhImmYrSDdoa+s04bXb+2FfHdDyxd+TjnIlCID3H4L5DlgqeIodSJkBq8dZR4JjTWbCWKPUwT6nmQIDAQAB', '2025-05-19 13:41:31');
 
 -- --------------------------------------------------------
 
@@ -1872,7 +1878,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `phone`, `address`, `password`, `name`, `create_at`, `update_at`) VALUES
-(5, NULL, '84111111111', NULL, '123', NULL, NULL, NULL),
+(5, 'admin@abc.com', '84111111111', NULL, '123', NULL, NULL, NULL),
 (12, 'phamquockhanh0812@gmail.com', '84111111115', 'abc', NULL, 'Quốc Khánh', NULL, NULL),
 (14, 'H@gmail.com', '84567567567', '123ASSD', 'agr', '123', '2025-01-13', NULL),
 (15, 'khachhang4@gmail.com', '8400932141', 'Thanh Sao Vuong', 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', 'Khach Hang 4', '2025-05-16', NULL);
@@ -1985,7 +1991,7 @@ ALTER TABLE `product_sku`
 -- Indexes for table `publickeystorage`
 --
 ALTER TABLE `publickeystorage`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `role`
@@ -2041,7 +2047,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -2071,13 +2077,13 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -2096,6 +2102,12 @@ ALTER TABLE `product_color_img`
 --
 ALTER TABLE `product_sku`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=623;
+
+--
+-- AUTO_INCREMENT for table `publickeystorage`
+--
+ALTER TABLE `publickeystorage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `role`
