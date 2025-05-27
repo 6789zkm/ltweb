@@ -47,19 +47,19 @@
 					</div>
 				</div>
 			</form>
-			<div class="line"></div>
-			<div class="media-options">
-				<%--					<a href="#" class="facebook">--%>
-				<%--						<i class='bx bxl-facebook facebook-icon'></i>--%>
-				<%--						<span>Login with Facebook</span>--%>
-				<%--					</a>--%>
-				<a
-						href="https://accounts.google.com/o/oauth2/auth?scope=profile%20https://www.googleapis.com/auth/userinfo.email&redirect_uri=http://localhost:8080/Ecommerce_Web/login-google&response_type=code&client_id=524025208769-5qnkl0hima275idgajn63hhdo7i3hfeb.apps.googleusercontent.com&approval_prompt=force"
-						class="google">
-					<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"/>
-					<span>Login with Google</span>
-				</a>
-			</div>
+<%--			<div class="line"></div>--%>
+<%--			<div class="media-options">--%>
+<%--				&lt;%&ndash;					<a href="#" class="facebook">&ndash;%&gt;--%>
+<%--				&lt;%&ndash;						<i class='bx bxl-facebook facebook-icon'></i>&ndash;%&gt;--%>
+<%--				&lt;%&ndash;						<span>Login with Facebook</span>&ndash;%&gt;--%>
+<%--				&lt;%&ndash;					</a>&ndash;%&gt;--%>
+<%--				<a--%>
+<%--						href="https://accounts.google.com/o/oauth2/auth?scope=profile%20https://www.googleapis.com/auth/userinfo.email&redirect_uri=http://localhost:8080/Ecommerce_Web/login-google&response_type=code&client_id=524025208769-5qnkl0hima275idgajn63hhdo7i3hfeb.apps.googleusercontent.com&approval_prompt=force"--%>
+<%--						class="google">--%>
+<%--					<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"/>--%>
+<%--					<span>Login with Google</span>--%>
+<%--				</a>--%>
+<%--			</div>--%>
 
 		</div>
 	</div>
