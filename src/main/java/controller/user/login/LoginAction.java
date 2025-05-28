@@ -44,11 +44,8 @@ public class LoginAction extends HttpServlet {
             session.setAttribute("user", user);
 
             cartDetailService.mergeCartAfterLogin(req, user, resp);
-            if(userRepository.getKeyByUser(user.getId()) == null){
-                resp.sendRedirect(req.getContextPath() + "/profile");
-            }else{
-                resp.sendRedirect(req.getContextPath() + "/home");
-            }
+
+            resp.sendRedirect(req.getContextPath() + "/home");
         } else {
             req.setAttribute("error", "Mật khẩu hoặc email không hợp lệ!");
             req.getRequestDispatcher("/view/user/login.jsp").forward(req, resp);

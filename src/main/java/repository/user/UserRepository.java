@@ -1084,39 +1084,4 @@ public class UserRepository {
 		}
 	}
 
-	public String getKeyByUser(long userId) {
-		connection = DBConnection.getConection();
-		try {
-			String sql = "SELECT * FROM `publickeystorage` WHERE userID = ?";
-			pst = connection.prepareStatement(sql);
-			pst.setLong(1, userId);
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				return rs.getString("publicKey");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pst != null) {
-				try {
-					pst.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (connection != null) {
-				try {
-					DBConnection.closeConnection(connection);
-					;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return null;
-	}
-
-//	public static void main(String[] args) {
-//		System.out.println(new UserRepository().getKeyByUser(15));
-//	}
 }
