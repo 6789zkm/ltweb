@@ -54,9 +54,9 @@ body {
 		</div>
 		<form action="<%=request.getContextPath()%>/adminLogin" method="post">
 			<div class="mb-3 mt-3">
-				<label for="phone" class="form-label">Nhập số diện thoại</label> <input
+				<label for="phone" class="form-label">Nhập tài khoản đăng nhập</label> <input
 					type="text" class="form-control" id="phone" name="phone"
-					placeholder="Your Phone Number +84" required>
+					placeholder="Your email" required>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Nhập mật khẩu</label> <input

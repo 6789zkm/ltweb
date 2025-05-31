@@ -62,6 +62,9 @@
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/adminProduct"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/order"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
             <li><a class="app-menu__item active" href="${pageContext.request.contextPath}/inventory"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý hàng tồn kho</span></a></li>
+            <li><a class="app-menu__item"
+                   href="${pageContext.request.contextPath}/historySign"><i
+                    class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử tạo khóa</span></a></li>
         </ul>
     </aside>
     
