@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th5 31, 2025 lúc 03:47 AM
+-- Thời gian đã tạo: Th5 31, 2025 lúc 03:57 AM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -1753,7 +1753,7 @@ CREATE TABLE `publickeystorage` (
                                     `userID` int NOT NULL,
                                     `publicKey` text COLLATE utf8mb4_general_ci NOT NULL,
                                     `updateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `isDelete` tinyint NOT NULL
+                                    `isDelete` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1763,7 +1763,8 @@ CREATE TABLE `publickeystorage` (
 INSERT INTO `publickeystorage` (`id`, `userID`, `publicKey`, `updateAt`, `isDelete`) VALUES
                                                                                          (1, 0, 'dsadasdad', '2025-05-17 08:38:19', 0),
                                                                                          (2, 15, 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6zcFkp+0koYhLS7bp9PvZA2uMwJ0XPApV4MmTlGu4uvrdxbhAD+zBdK0NoE75rjXTlF/Ik9/bbe/wJmRdcpNuK8txGgCEH0AXnQPgXe9QWkkYBkmpBXEl2uzfjD4yF/rfb7l7qaatnlj2B1hCsVElWTiaP0p9l4BPPN62e5U2vvtRHJC0VAzReT5IrHgmuNr9dK0JEiAIO7M/LVxogd0uTWr+gtSn/B0atEeLwRNehjS6+OvOVZZYRRovx0ueZ1n0GbzUfNG3DhImmYrSDdoa+s04bXb+2FfHdDyxd+TjnIlCID3H4L5DlgqeIodSJkBq8dZR4JjTWbCWKPUwT6nmQIDAQAB', '2025-05-19 13:41:31', 0),
-                                                                                         (3, 17, 'MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBOKl9Ro6SB2i6AfEYQYVR+ soBOser2wCEn9eeJxpplxB6cCBTVOP0+m4wMWgSiF4MsCZMX8Tc5irTCQ7pAXwx5 Mu0Waei3j9GSzMO3vx3ZfO0cT2u46tjTFQq3TpNdGMBEareCwU/9izflj06AKYDW OWTFaZ6FDM038PHmn7N10cNE+Nddxe39VkP9Q8q+hh1keSkdJWFGETJDr53ADQz3 qoMTOml/qdvWMdXgpqfdNdV5ImLOsC7lQqZXvXUaDejWmVeE01Czet52lTUwQCOC xLvRp90XlOpc1uFi2icjQdwWW9Fw1g28hfvqDvgvu5KGNJpXav+9tf/vRvRejWgF Dyjs1ye/t/wRDlOaXxRqiG+VgwhVEJob3GspJylnF6cRWQEdqnxBtj2kjF5iIDg/ DuUA892g0Ko3nlmnrSt1cfCrK4mJB8gTXalmJwirdXJX6mB0P4S8GMY/6JdGYJ/t lIQDwelk15jKqpRbyalVEsMrgTbAHPr8TTCNGsnCM91p/5nSwA0CSnZOG5sjWRHZ N/dwXDNflTnfIiUXmZ8AIWu5TLFlINCgEnWoTGLPlydAWZ/4JW2Q8+pwEaqe0GcY fYOJWIIH4WPErdUX4SxWr9VkuiicgIqmYJ9eUGEcrGzAoG6n5crVdLh2f8EdhmuQ qtXmWyIzqdiFsurkKlgfDwIDAQAB', '2025-05-27 14:27:28', 0);
+                                                                                         (3, 17, 'MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBOKl9Ro6SB2i6AfEYQYVR+ soBOser2wCEn9eeJxpplxB6cCBTVOP0+m4wMWgSiF4MsCZMX8Tc5irTCQ7pAXwx5 Mu0Waei3j9GSzMO3vx3ZfO0cT2u46tjTFQq3TpNdGMBEareCwU/9izflj06AKYDW OWTFaZ6FDM038PHmn7N10cNE+Nddxe39VkP9Q8q+hh1keSkdJWFGETJDr53ADQz3 qoMTOml/qdvWMdXgpqfdNdV5ImLOsC7lQqZXvXUaDejWmVeE01Czet52lTUwQCOC xLvRp90XlOpc1uFi2icjQdwWW9Fw1g28hfvqDvgvu5KGNJpXav+9tf/vRvRejWgF Dyjs1ye/t/wRDlOaXxRqiG+VgwhVEJob3GspJylnF6cRWQEdqnxBtj2kjF5iIDg/ DuUA892g0Ko3nlmnrSt1cfCrK4mJB8gTXalmJwirdXJX6mB0P4S8GMY/6JdGYJ/t lIQDwelk15jKqpRbyalVEsMrgTbAHPr8TTCNGsnCM91p/5nSwA0CSnZOG5sjWRHZ N/dwXDNflTnfIiUXmZ8AIWu5TLFlINCgEnWoTGLPlydAWZ/4JW2Q8+pwEaqe0GcY fYOJWIIH4WPErdUX4SxWr9VkuiicgIqmYJ9eUGEcrGzAoG6n5crVdLh2f8EdhmuQ qtXmWyIzqdiFsurkKlgfDwIDAQAB', '2025-05-27 14:27:28', 0),
+                                                                                         (4, 16, 'MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBOKl9Ro6SB2i6AfEYQYVR+ soBOser2wCEn9eeJxpplxB6cCBTVOP0+m4wMWgSiF4MsCZMX8Tc5irTCQ7pAXwx5 Mu0Waei3j9GSzMO3vx3ZfO0cT2u46tjTFQq3TpNdGMBEareCwU/9izflj06AKYDW OWTFaZ6FDM038PHmn7N10cNE+Nddxe39VkP9Q8q+hh1keSkdJWFGETJDr53ADQz3 qoMTOml/qdvWMdXgpqfdNdV5ImLOsC7lQqZXvXUaDejWmVeE01Czet52lTUwQCOC xLvRp90XlOpc1uFi2icjQdwWW9Fw1g28hfvqDvgvu5KGNJpXav+9tf/vRvRejWgF Dyjs1ye/t/wRDlOaXxRqiG+VgwhVEJob3GspJylnF6cRWQEdqnxBtj2kjF5iIDg/ DuUA892g0Ko3nlmnrSt1cfCrK4mJB8gTXalmJwirdXJX6mB0P4S8GMY/6JdGYJ/t lIQDwelk15jKqpRbyalVEsMrgTbAHPr8TTCNGsnCM91p/5nSwA0CSnZOG5sjWRHZ N/dwXDNflTnfIiUXmZ8AIWu5TLFlINCgEnWoTGLPlydAWZ/4JW2Q8+pwEaqe0GcY fYOJWIIH4WPErdUX4SxWr9VkuiicgIqmYJ9eUGEcrGzAoG6n5crVdLh2f8EdhmuQ qtXmWyIzqdiFsurkKlgfDwIDAQAB', '2025-05-31 03:57:02', 0);
 
 -- --------------------------------------------------------
 
@@ -1893,7 +1894,7 @@ INSERT INTO `user` (`id`, `email`, `phone`, `address`, `password`, `name`, `crea
                                                                                                          (12, 'phamquockhanh0812@gmail.com', '84111111115', 'abc', NULL, 'Quốc Khánh', NULL, NULL),
                                                                                                          (14, 'H@gmail.com', '84567567567', '123ASSD', 'agr', '123', '2025-01-13', NULL),
                                                                                                          (15, 'khachhang4@gmail.com', '8400932141', 'Thanh Sao Vuong', 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', 'Khach Hang 4', '2025-05-16', NULL),
-                                                                                                         (16, 'ade@gmail.com', NULL, NULL, 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', NULL, '2025-05-27', NULL),
+                                                                                                         (16, 'ade@gmail.com', '84', '', 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', '', '2025-05-27', NULL),
                                                                                                          (17, 'abc@gmail.com', '84123456789', 'abc', 'ZYKeVC3RUfRDzJlycMYeeMBCqC1ofME4RL8sGBNxRgA=', 'abc', '2025-05-27', NULL);
 
 -- --------------------------------------------------------
@@ -2122,7 +2123,7 @@ ALTER TABLE `product_sku`
 -- AUTO_INCREMENT cho bảng `publickeystorage`
 --
 ALTER TABLE `publickeystorage`
-    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `role`
