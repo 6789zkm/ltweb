@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Cart.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Footer.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/OrderHistory.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -81,6 +82,7 @@
                                     <td>${prevOrder.address}</td>
                                     <td>${prevOrder.date_order}</td>
                                     <td><span class="badge bg-warning">${prevOrder.status}</span></td>
+                                    <td><a href="/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
                                 </tr>
                             </c:if>
                             <c:set var="currentOrderId" value="${order.id_order_admin}" />
@@ -106,6 +108,7 @@
                             <td>${prevOrder.address}</td>
                             <td>${prevOrder.date_order}</td>
                             <td><span class="badge bg-warning">${prevOrder.status}</span></td>
+                            <td><a href="/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
                         </tr>
                     </c:if>
                 </c:forEach>
@@ -130,6 +133,7 @@
                     <th>Địa chỉ</th>
                     <th>Ngày đặt hàng</th>
                     <th>Trạng thái</th>
+                    <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -176,6 +180,7 @@
                             <td>${prevOrder.address}</td>
                             <td>${prevOrder.date_order}</td>
                             <td><span class="badge bg-success">${prevOrder.status}</span></td>
+                            <td><a class="badge bg-success">Chỉnh sửa</a></td>
                         </tr>
                     </c:if>
                 </c:forEach>

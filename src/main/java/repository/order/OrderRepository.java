@@ -120,7 +120,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithResponseId(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -172,7 +172,7 @@ public class OrderRepository {
 	public AdminOrderResponse getOrderById(Long orderId) {
 		AdminOrderResponse orderResponse = null;
 		String sql = "SELECT o.id, o.customer_name AS user_name, p.name AS product_name, od.quantity, "
-				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.publicKey "
+				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.customer_phone, o.publicKey "
 				+ "FROM ecommerce.order o "
 				+ "INNER JOIN order_detail od ON od.order_id = o.id "
 				+ "INNER JOIN product_sku ps ON ps.id = od.product_sku_id "
