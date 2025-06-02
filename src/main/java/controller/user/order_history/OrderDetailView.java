@@ -24,14 +24,13 @@ public class OrderDetailView extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String orderID = req.getParameter("orderID");
         List<AdminOrderResponse> order = orderRepository.getAllOrderWithResponseId(Long.parseLong(orderID));
-        List<DetailCartResponse> detailCartResponses = new LinkedList<>();
         ArrayList<IOrderResponse> iOrderResponse = new ArrayList<>(order);
 
 
         Bill bill = new Bill(iOrderResponse, order.get(0).getName_customer(), order.get(0).getAddress(), order.get(0).getPhone());
         req.getSession().setAttribute("order", order);
         req.getSession().setAttribute("bill", bill);
-
+        req.setAttribute("orderID", orderID);
         req.setAttribute("customerName", order.get(0).getName_customer());
         req.setAttribute("customerAddress", order.get(0).getAddress());
         req.setAttribute("customerPhone", order.get(0).getPhone());

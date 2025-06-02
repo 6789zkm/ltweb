@@ -237,6 +237,33 @@ public class OrderRepository {
 		}
 	}
 
+	public void updateSignOrderById(Long orderId, String sign, String publicKey) {
+		String sql = "UPDATE ecommerce.order SET sign = ?, publicKey = ? WHERE id = ?";
+
+		try (Connection connection = DBConnection.getConection();
+			 PreparedStatement pst = connection.prepareStatement(sql)) {
+
+			// Gán giá trị cho câu lệnh SQL
+			pst.setString(1, sign);  // Cập nhật trạng thái đơn hàng
+			pst.setString(2, publicKey);
+			pst.setLong(3, orderId);    // Cập nhật theo id đơn hàng
+
+			// Thực thi câu lệnh UPDATE
+			int rowsAffected = pst.executeUpdate(); // Dùng executeUpdate thay vì executeQuery
+
+			// Kiểm tra nếu có dòng bị ảnh hưởng
+			if (rowsAffected > 0) {
+				System.out.println("Đơn hàng đã được cập nhật thành công.");
+			} else {
+				System.out.println("Không tìm thấy đơn hàng với ID: " + orderId);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeConnection(connection);
+		}
+	}
 	public String getEmailByOrderId(Long idConvert) {
 		String res = null;
 		String sql = "select o.customer_email "

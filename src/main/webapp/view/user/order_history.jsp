@@ -82,7 +82,7 @@
                                     <td>${prevOrder.address}</td>
                                     <td>${prevOrder.date_order}</td>
                                     <td><span class="badge bg-warning">${prevOrder.status}</span></td>
-                                    <td><a href="/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
+                                    <td><a href="<%=request.getContextPath()%>/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
                                 </tr>
                             </c:if>
                             <c:set var="currentOrderId" value="${order.id_order_admin}" />
@@ -108,7 +108,7 @@
                             <td>${prevOrder.address}</td>
                             <td>${prevOrder.date_order}</td>
                             <td><span class="badge bg-warning">${prevOrder.status}</span></td>
-                            <td><a href="/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
+                            <td><a href="<%=request.getContextPath()%>/orderDetail?orderID=${currentOrderId}" class="badge bg-success no-text-decoration">Cập nhật</a></td>
                         </tr>
                     </c:if>
                 </c:forEach>
