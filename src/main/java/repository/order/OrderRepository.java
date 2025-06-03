@@ -120,7 +120,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithResponseId(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -172,7 +172,7 @@ public class OrderRepository {
 	public AdminOrderResponse getOrderById(Long orderId) {
 		AdminOrderResponse orderResponse = null;
 		String sql = "SELECT o.id, o.customer_name AS user_name, p.name AS product_name, od.quantity, "
-				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.publicKey "
+				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.customer_phone, o.publicKey "
 				+ "FROM ecommerce.order o "
 				+ "INNER JOIN order_detail od ON od.order_id = o.id "
 				+ "INNER JOIN product_sku ps ON ps.id = od.product_sku_id "
@@ -237,6 +237,33 @@ public class OrderRepository {
 		}
 	}
 
+	public void updateSignOrderById(Long orderId, String sign, String publicKey) {
+		String sql = "UPDATE ecommerce.order SET sign = ?, publicKey = ? WHERE id = ?";
+
+		try (Connection connection = DBConnection.getConection();
+			 PreparedStatement pst = connection.prepareStatement(sql)) {
+
+			// Gán giá trị cho câu lệnh SQL
+			pst.setString(1, sign);  // Cập nhật trạng thái đơn hàng
+			pst.setString(2, publicKey);
+			pst.setLong(3, orderId);    // Cập nhật theo id đơn hàng
+
+			// Thực thi câu lệnh UPDATE
+			int rowsAffected = pst.executeUpdate(); // Dùng executeUpdate thay vì executeQuery
+
+			// Kiểm tra nếu có dòng bị ảnh hưởng
+			if (rowsAffected > 0) {
+				System.out.println("Đơn hàng đã được cập nhật thành công.");
+			} else {
+				System.out.println("Không tìm thấy đơn hàng với ID: " + orderId);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeConnection(connection);
+		}
+	}
 	public String getEmailByOrderId(Long idConvert) {
 		String res = null;
 		String sql = "select o.customer_email "

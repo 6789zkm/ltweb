@@ -69,15 +69,15 @@ public class SignView extends JFrame {
         gbcTop.gridx = 2;
         gbcTop.weightx = 0.0;
 
-        copyToClipboard = new JButton("Copy to Clipboard");
+        copyToClipboard = new JButton("Copy vào Clipboard");
         copyToClipboard.setPreferredSize(new Dimension(120, 30));
         copyToClipboard.addActionListener(e -> {
             String publicKey = publicKey_field.getText();
             if (!publicKey.isEmpty()) {
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(publicKey), null);
-                JOptionPane.showMessageDialog(this, "Public Key copied to clipboard!");
+                JOptionPane.showMessageDialog(this, "Public Key đã được copy vào clipboard!");
             } else {
-                JOptionPane.showMessageDialog(this, "Public Key is empty!");
+                JOptionPane.showMessageDialog(this, "Public Key không có!");
             }
         });
         topPanel.add(copyToClipboard, gbcTop);
