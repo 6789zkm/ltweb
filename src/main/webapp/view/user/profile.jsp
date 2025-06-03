@@ -92,6 +92,10 @@
 							</button>
 						</a>
 
+						<a href="<%=request.getContextPath()%>/report_lost_key_view"><button
+								class="btn btn-success profile-button ms-2" type="button">Báo
+							Mất Khoá</button></a>
+
 					</div>
 				</div>
 			</div>
