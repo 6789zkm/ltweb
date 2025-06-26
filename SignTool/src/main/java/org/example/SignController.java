@@ -1,8 +1,10 @@
-package tool;
+package org.example;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -14,19 +16,20 @@ public class SignController {
     private String inputFileExtension;
     private byte[] lastResult;
 
-    public SignController() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public SignController(SignView signView, SignModel signModel) {
 
-        model = new SignModel();
-        view = new SignView();
+
+        this.model = signModel;
+        this.view = signView;
+        initializeUIState();
+        init();
+    }
+
+    private void init() {
+
         inputFileExtension = null;
         lastResult = null;
 
-        initializeUIState();
 
         // Gen Key Pair button
         view.getBtnGenKeyPair().addActionListener(e -> {
@@ -34,11 +37,9 @@ public class SignController {
             try {
                 model.genKeyPair(len);
                 view.getPublicKey_field().setText(model.getPublicKeyStr());
-                view.getPrivateKey_field().setText(model.getPrivateKeyStr());
                 view.getOutput().setText("Đã tạo cặp khóa RSA thành công.");
                 updateAfterKeyPairGeneration();
                 view.getBtnSign().setEnabled(true);
-                view.getBtnGenKeyPair().setEnabled(false);
                 view.getKeyLength_field().setEnabled(false);
             } catch (NoSuchAlgorithmException ex) {
                 JOptionPane.showMessageDialog(view, "Lỗi tạo khóa: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -47,36 +48,21 @@ public class SignController {
 
 
         // Load Private Key button
-        view.getBtnLoadPrivateKey().addActionListener(e -> {
-            String key = view.getPrivateKey_field().getText().trim();
-            if (key.isEmpty()) {
-                JOptionPane.showMessageDialog(view, "Vui lòng nhập khóa bí mật.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (!model.checkPrivateKey(key)) {
-                return;
-            }
-            String result = model.loadPrivateKey(key);
-            view.getOutput().setText(result);
-            updateAfterPrivateKeyLoad();
-            view.getBtnGenKeyPair().setEnabled(false);
-            view.getKeyLength_field().setEnabled(false);
-            view.getBtnSign().setEnabled(true);
-        });
-
-        // Cancel Key button
-        view.getBtnCancelKey().addActionListener(e -> {
-            model.cancelKeys();
-            model = new SignModel();
-            view.getPublicKey_field().setText("");
-            view.getPrivateKey_field().setText("");
-            view.getInput().setText("");
-            view.getOutput().setText("");
-            inputFileExtension = null;
-            lastResult = null;
-            initializeUIState();
-            view.getOutput().setText("Đã hủy khóa và đặt lại trạng thái.");
-        });
+//        view.getBtnLoadPrivateKey().addActionListener(e -> {
+//            String key = view.getPrivateKey_field().getText().trim();
+//            if (key.isEmpty()) {
+//                JOptionPane.showMessageDialog(view, "Vui lòng nhập khóa bí mật.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//            if (!model.checkPrivateKey(key)) {
+//                return;
+//            }
+//            String result = model.loadPrivateKey(key);
+//            view.getOutput().setText(result);
+//            updateAfterPrivateKeyLoad();
+//            view.getKeyLength_field().setEnabled(false);
+//            view.getBtnSign().setEnabled(true);
+//        });
 
         // Encrypt button
         view.getBtnSign().addActionListener(e -> {
@@ -110,7 +96,7 @@ public class SignController {
                         JOptionPane.showMessageDialog(view, "File khóa bí mật rỗng hoặc không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    view.getPrivateKey_field().setText(keyContent.trim());
+//                    view.getPrivateKey_field().setText(keyContent.trim());
                     String result = model.loadPrivateKey(keyContent);
                     view.getOutput().setText(result);
                     updateAfterPrivateKeyLoad();
@@ -119,28 +105,6 @@ public class SignController {
                 }
             } else {
                 view.getOutput().setText("Đã hủy chọn file khóa bí mật.");
-            }
-        });
-
-        // Choose Input File button
-        view.getBtnChooseInputFile().addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Chọn file input");
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fileChooser.setAcceptAllFileFilterUsed(true);
-            fileChooser.setCurrentDirectory(FileSystemView.getFileSystemView().getRoots()[0]);
-
-            int userSelection = fileChooser.showOpenDialog(view);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                String filePath = selectedFile.getAbsolutePath();
-                inputFileExtension = getFileExtension(selectedFile);
-                view.getInput().setText(filePath);
-                view.getOutput().setText("Đã chọn file: " + filePath);
-                updateAfterInputSelection();
-                view.getBtnSign().setEnabled(true);
-            } else {
-                view.getOutput().setText("Đã hủy chọn file input.");
             }
         });
 
@@ -179,46 +143,39 @@ public class SignController {
         // Save Result button
         view.getBtnSaveResult().addActionListener(e -> {
             String res = view.getOutput().getText().trim();
-            if (res.length() == 0) {
+            if (res.isEmpty()) {
                 JOptionPane.showMessageDialog(view, "Không có kết quả để lưu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            try {
-                String extension = view.getOutput().getText().startsWith("Đã giải mã file") ? inputFileExtension : ".enc";
-                String savedResult = model.saveResult(res, view, extension);
-                view.getOutput().setText(savedResult);
-                updateEncryptDecryptButtons();
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(view, "Lỗi lưu kết quả: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
+//            try {
+//
+//            } catch (IOException ex) {
+//                JOptionPane.showMessageDialog(view, "Lỗi lưu kết quả: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            }
+
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(res), null);
+            JOptionPane.showMessageDialog(view, "Dữ liệu đã được copy vào clipboard!");
+            updateEncryptDecryptButtons();
         });
-
     }
-
     private void initializeUIState() {
         view.getPublicKey_field().setEnabled(true);
-        view.getPrivateKey_field().setEnabled(true);
         view.getBtnLoadPrivateKey().setEnabled(true);
         view.getBtnGenKeyPair().setEnabled(true);
         view.getBtnSavePublicKey().setEnabled(false);
         view.getBtnSavePrivateKey().setEnabled(false);
         view.getInput().setEnabled(false);
-        view.getBtnChooseInputFile().setEnabled(false);
         view.getBtnSign().setEnabled(false);
         view.getBtnSaveResult().setEnabled(false);
-        view.getBtnCancelKey().setEnabled(false);
         view.getKeyLength_field().setEnabled(true);
     }
 
     private void updateAfterKeyPairGeneration() {
         view.getPublicKey_field().setEnabled(false);
-        view.getPrivateKey_field().setEnabled(false);
         view.getBtnLoadPrivateKey().setEnabled(false);
         view.getBtnSavePublicKey().setEnabled(true);
         view.getBtnSavePrivateKey().setEnabled(true);
         view.getInput().setEnabled(true);
-        view.getBtnChooseInputFile().setEnabled(true);
-        view.getBtnCancelKey().setEnabled(true);
         view.getKeyLength_field().setEnabled(false);
         updateEncryptDecryptButtons();
     }
@@ -227,8 +184,6 @@ public class SignController {
         view.getPublicKey_field().setEnabled(false);
         view.getBtnSavePublicKey().setEnabled(true);
         view.getInput().setEnabled(true);
-        view.getBtnChooseInputFile().setEnabled(true);
-        view.getBtnCancelKey().setEnabled(true);
         updateEncryptDecryptButtons();
     }
 
@@ -237,8 +192,6 @@ public class SignController {
         view.getBtnLoadPrivateKey().setEnabled(false);
         view.getBtnSavePrivateKey().setEnabled(true);
         view.getInput().setEnabled(true);
-        view.getBtnChooseInputFile().setEnabled(true);
-        view.getBtnCancelKey().setEnabled(true);
         updateEncryptDecryptButtons();
     }
 
@@ -254,7 +207,6 @@ public class SignController {
         String input = view.getInput().getText().trim();
         boolean hasInput = !input.isEmpty();
         boolean hasPublicKey = !view.getPublicKey_field().getText().trim().isEmpty();
-        boolean hasPrivateKey = !view.getPrivateKey_field().getText().trim().isEmpty();
         view.getBtnSign().setEnabled(hasInput && hasPublicKey);
     }
 
@@ -268,7 +220,7 @@ public class SignController {
         return view;
     }
 
-    public static void main(String[] args) {
-        new SignController();
-    }
+//    public static void main(String[] args) {
+//        new SignController();
+//    }
 }

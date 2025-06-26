@@ -1,4 +1,4 @@
-package tool;
+package org.example;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -10,7 +10,7 @@ public class SignView extends JFrame {
     private JTextField input, publicKey_field, privateKey_field;
     private JComboBox<String> keyLength_field;
     private JTextArea output;
-    private JButton btnSign, btnGenKeyPair, btnLoadPrivateKey, btnSavePublicKey, btnSavePrivateKey, btnChooseInputFile, btnSaveResult, btnCancelKey;
+    private JButton btnSign, btnGenKeyPair, btnLoadPrivateKey, btnSavePublicKey, btnSavePrivateKey, btnSaveResult;
 
     private JButton copyToClipboard;
 
@@ -44,7 +44,7 @@ public class SignView extends JFrame {
         gbcTop.gridx = 0;
         gbcTop.gridy = 0;
         gbcTop.weightx = 0.0;
-        topPanel.add(lb_input = new JLabel("Input:"), gbcTop);
+        topPanel.add(lb_input = new JLabel("Dữ liệu cần ký:"), gbcTop);
 
         gbcTop.gridx = 1;
         gbcTop.weightx = 1.0;
@@ -52,9 +52,6 @@ public class SignView extends JFrame {
 
         gbcTop.gridx = 2;
         gbcTop.weightx = 0.0;
-        btnChooseInputFile = new JButton("Choose File");
-        btnChooseInputFile.setPreferredSize(new Dimension(120, 30));
-        topPanel.add(btnChooseInputFile, gbcTop);
 
         gbcTop.gridx = 0;
         gbcTop.gridy = 1;
@@ -88,17 +85,10 @@ public class SignView extends JFrame {
         btnSavePublicKey.setPreferredSize(new Dimension(120, 30));
         topPanel.add(btnSavePublicKey, gbcTop);
 
-        gbcTop.gridx = 0;
-        gbcTop.gridy = 2;
-        gbcTop.weightx = 0.0;
-        topPanel.add(lb_privateKey = new JLabel("Private Key:"), gbcTop);
-
-        gbcTop.gridx = 1;
-        gbcTop.weightx = 1.0;
-        topPanel.add(privateKey_field = new JTextField(), gbcTop);
-
         gbcTop.gridx = 2;
+        gbcTop.gridy = 4;
         gbcTop.weightx = 0.0;
+
         btnLoadPrivateKey = new JButton("Load Private Key");
         btnLoadPrivateKey.setPreferredSize(new Dimension(120, 30));
         topPanel.add(btnLoadPrivateKey, gbcTop);
@@ -148,19 +138,16 @@ public class SignView extends JFrame {
 
         Dimension buttonSize = new Dimension(120, 30);
 
-        btnGenKeyPair = new JButton("Gen Key Pair");
-        btnSign = new JButton("Sign");
-        btnCancelKey = new JButton("Cancel Key");
-        btnSaveResult = new JButton("Save Result");
+        btnGenKeyPair = new JButton("Tạo khóa");
+        btnSign = new JButton("Ký");
+        btnSaveResult = new JButton("Copy vào Clipboard");
 
         btnGenKeyPair.setPreferredSize(buttonSize);
-        btnCancelKey.setPreferredSize(buttonSize);
         btnSign.setPreferredSize(buttonSize);
-        btnSaveResult.setPreferredSize(buttonSize);
+//        btnSaveResult.setPreferredSize(buttonSize);
 
         buttonPanel.add(btnGenKeyPair);
         buttonPanel.add(btnSign);
-        buttonPanel.add(btnCancelKey);
         buttonPanel.add(btnSaveResult);
 
         mainPanel.add(buttonPanel, gbcMain);
@@ -185,16 +172,13 @@ public class SignView extends JFrame {
         initializeUIState();
 
         publicKey_field.setEnabled(true);
-        privateKey_field.setEnabled(true);
         setVisible(true);
     }
 
     private void initializeUIState() {
         input.setEnabled(false);
-        btnChooseInputFile.setEnabled(false);
         btnSign.setEnabled(false);
         btnSaveResult.setEnabled(false);
-        btnCancelKey.setEnabled(false);
         btnSavePublicKey.setEnabled(false);
         btnLoadPrivateKey.setEnabled(true);
         btnSavePrivateKey.setEnabled(false);
@@ -204,29 +188,22 @@ public class SignView extends JFrame {
 
     public void disableComponent() {
         input.setEnabled(false);
-        btnChooseInputFile.setEnabled(false);
         btnSign.setEnabled(false);
         btnSaveResult.setEnabled(false);
-        btnCancelKey.setEnabled(false);
     }
 
     public void enableComponent() {
         input.setEnabled(true);
-        btnChooseInputFile.setEnabled(true);
         btnSign.setEnabled(true);
         btnSaveResult.setEnabled(true);
-        btnCancelKey.setEnabled(true);
         publicKey_field.setEnabled(true);
-        privateKey_field.setEnabled(true);
     }
 
     public JButton getBtnSaveResult() { return btnSaveResult; }
-    public JButton getBtnChooseInputFile() { return btnChooseInputFile; }
     public JButton getBtnGenKeyPair() { return btnGenKeyPair; }
     public JButton getBtnLoadPrivateKey() { return btnLoadPrivateKey; }
     public JButton getBtnSavePublicKey() { return btnSavePublicKey; }
     public JButton getBtnSavePrivateKey() { return btnSavePrivateKey; }
-    public JButton getBtnCancelKey() { return btnCancelKey; }
     public JTextArea getOutput() { return output; }
     public JComboBox<String> getKeyLength_field() { return keyLength_field; }
     public JTextField getInput() { return input; }

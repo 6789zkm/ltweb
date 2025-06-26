@@ -1,4 +1,4 @@
-package tool;
+package org.example;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
