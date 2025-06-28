@@ -50,19 +50,19 @@
                   class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="text-right">Báo mất khoá</h4>
           </div>
-          <div class="row mt-2">
-            <div class="col-md-6">
-              <label class="labels">Họ và Tên</label><input type="text"
-                                                            class="form-control" placeholder="${user.name}" value="${user.name}"
-                                                            name="username">
-            </div>
-          </div>
+<%--          <div class="row mt-2">--%>
+<%--            <div class="col-md-6">--%>
+<%--              <label class="labels">Họ và Tên</label><input type="text"--%>
+<%--                                                            class="form-control" placeholder="${user.name}" value="${user.name}"--%>
+<%--                                                            name="username">--%>
+<%--            </div>--%>
+<%--          </div>--%>
           <div class="row mt-3">
-            <div class="col-md-12">
-              <label class="labels">Số điện thoại</label><input type="number"
-                                                                class="form-control" placeholder="${user.phone}" value="${user.phone}"
-                                                                name="phone" oninput="this.value = this.value.slice(0, 9)">
-            </div>
+<%--            <div class="col-md-12">--%>
+<%--              <label class="labels">Số điện thoại</label><input type="number"--%>
+<%--                                                                class="form-control" placeholder="${user.phone}" value="${user.phone}"--%>
+<%--                                                                name="phone" oninput="this.value = this.value.slice(0, 9)">--%>
+<%--            </div>--%>
             <div class="col-md-12 mt-3">
               <label class="labels">Email</label><input type="text"
                                                         class="form-control" placeholder="${user.email}" value="${user.email}"
@@ -70,19 +70,19 @@
             </div>
             <div class="col-md-12 mt-3">
               <label class="labels">Public key</label><input type="text"
-                                                          class="form-control" placeholder="${user.address}" value="${user.address}"
-                                                          name="address">
+                                                          class="form-control" placeholder="${publickeystorage.publicKey}" value="${publickeystorage.publicKey}"
+                                                          name="publicKey">
             </div>
 
-            <div class="col-md-12 mt-3">
-              <label class="labels">Private key</label><input type="text"
-                                                       class="form-control" placeholder="${user.key}" value="" name="publicKey">
-            </div>
+<%--            <div class="col-md-12 mt-3">--%>
+<%--              <label class="labels">Private key</label><input type="text"--%>
+<%--                                                       class="form-control" placeholder="${user.key}" value="" name="publicKey">--%>
+<%--            </div>--%>
 
           </div>
           <div class="mt-3 text-center">
             <input type="hidden" name="userId" value="${user.id}">
-            <button class="btn btn-primary profile-button" type="submit">Báo
+              <a href="<%=request.getContextPath()%>/historyReportLostKey"><button class="btn btn-primary profile-button" type="submit">Báo
               Cáo</button>
             <a href="<%=request.getContextPath()%>/profile"><button
                     class="btn btn-primary profile-button" type="button">Huỷ</button></a>

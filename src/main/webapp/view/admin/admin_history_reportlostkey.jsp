@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dell
+  Date: 6/29/2025
+  Time: 1:18 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -119,18 +126,19 @@
         <li><a class="app-menu__item"
                href="${pageContext.request.contextPath}/inventory"><i
                 class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý hàng tồn kho</span></a></li>
-        <li><a class="app-menu__item active"
+        <li><a class="app-menu__item"
                href="${pageContext.request.contextPath}/historySign"><i
                 class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử tạo khóa</span></a></li>
-        <li><a class="app-menu__item"
+        <li><a class="app-menu__item active"
                href="${pageContext.request.contextPath}/historyReportLostKey"><i
                 class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử báo mất khoá</span></a></li>
+
     </ul>
 </aside>
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Danh sách khóa</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Danh sách lịch sử báo mất khoá</b></a></li>
         </ul>
         <div id="clock"></div>
     </div>

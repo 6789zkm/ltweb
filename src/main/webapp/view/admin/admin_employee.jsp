@@ -85,7 +85,11 @@
 						lý hàng tồn kho</span></a></li>
 			<li><a class="app-menu__item"
 				   href="${pageContext.request.contextPath}/historySign"><i
-					class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử tạo khóa</span></a></li>		</ul>
+					class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử tạo khóa</span></a></li>
+			<li><a class="app-menu__item"
+				   href="${pageContext.request.contextPath}/historyReportLostKey"><i
+					class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử báo mất khoá</span></a></li>
+		</ul>
 	</aside>
 	<main class="app-content">
 		<div class="app-title">
