@@ -44,7 +44,7 @@
     </div>
 
     <div class="col-md-6 border-right">
-      <form action="<%=request.getContextPath()%>/report_lost_key">
+      <form action="<%=request.getContextPath()%>/report_lost_key_submit" method="post">
         <div class="p-3 py-5">
           <div
                   class="d-flex justify-content-between align-items-center mb-3">
@@ -82,7 +82,7 @@
           </div>
           <div class="mt-3 text-center">
             <input type="hidden" name="userId" value="${user.id}">
-              <form action="${pageContext.request.contextPath}/report_lost_key_submit" method="post">
+              <form action="/Ecommerce_Web/report_lost_key_submit" method="post">
                   <input type="text" name="email" value="${user.email}" />
                   <input type="text" name="publicKey" value="${publickeystorage.publicKey}" />
                   <button class="btn btn-primary profile-button" type="submit">Báo Cáo</button>
