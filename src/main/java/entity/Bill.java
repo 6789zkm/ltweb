@@ -1,15 +1,12 @@
 package entity;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-
-import dto.response.AdminOrderResponse;
-import dto.response.DetailCartResponse;
 
 public class Bill {
     private List<IOrderResponse> detailCartResponses;
@@ -102,6 +99,27 @@ public class Bill {
 
     }
 
+    public static PublicKey loadPublicKey(String pem) throws Exception {
+        String publicKeyPEM = pem
+                .replace("-----BEGIN PUBLIC KEY-----", "")
+                .replace("-----END PUBLIC KEY-----", "")
+                .replaceAll("\\s", "");
+
+        byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA"); // Hoặc "EC", "DSA", tùy loại key
+        return keyFactory.generatePublic(keySpec);
+    }
+
+    public static String decode(String code) {
+        byte[] text = Base64.getDecoder().decode(code);
+        return new String(text);
+    }
+
+    public static byte[] decodeSign(String sign) {
+        return Base64.getDecoder().decode(sign.getBytes(StandardCharsets.UTF_8));
+    }
+
     public boolean verify(String publicKey, String sign) {
         if (publicKey == null || sign == null) {
             return false;
@@ -110,15 +128,12 @@ public class Bill {
         if (publicKey.isEmpty() || sign.isEmpty()) {
             return false;
         }
-        byte[] decodedBytes = Base64.getDecoder().decode(publicKey);
         try {
-            X509EncodedKeySpec spec = new X509EncodedKeySpec(decodedBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PublicKey key = keyFactory.generatePublic(spec);
+            PublicKey key = loadPublicKey(publicKey);
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initVerify(key);
-            signature.update(encode().getBytes());
-            return signature.verify(Base64.getDecoder().decode(sign));
+            signature.update(encode().getBytes(StandardCharsets.UTF_8));
+            return signature.verify(decodeSign(sign.trim()));
 
         } catch (Exception e) {
             e.printStackTrace();

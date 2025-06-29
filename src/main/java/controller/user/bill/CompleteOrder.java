@@ -38,7 +38,7 @@ public class CompleteOrder extends HttpServlet {
 
         String sign = (String) req.getParameter("signatureInput");
         if (sign == null || sign.isEmpty()) {
-            req.setAttribute("error", "Please sign the order.");
+            req.setAttribute("error", "Vui lòng nhập chữ ký.");
             req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
             return;
         }
@@ -48,6 +48,8 @@ public class CompleteOrder extends HttpServlet {
             req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
             return;
         }
+
+
         for (DetailCartResponse product : selectedProducts) {
             totalPrice += product.getPrice() * product.getQuantity();
         }

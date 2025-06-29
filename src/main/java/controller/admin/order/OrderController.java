@@ -60,7 +60,7 @@ public class OrderController extends HttpServlet {
 		Map<Long, User> groupUserByOrderId = groupUserByOrderId(list);
         for (Map.Entry<Long, List<IOrderResponse>> entry : groupedOrders.entrySet()) {
             Long orderId = entry.getKey();
-            List<IOrderResponse> orderResponses = entry.getValue();
+            List<IOrderResponse> orderResponses = getOrdersById(orderId, list);
 
             String customerName = groupUserByOrderId.get(orderId).getName();
             String customerAddress = groupUserByOrderId.get(orderId).getAddress();
@@ -98,6 +98,17 @@ public class OrderController extends HttpServlet {
         }
         return groupedOrders;
     }
+
+	private List<IOrderResponse> getOrdersById(Long id, List<AdminOrderResponse> list) {
+		List<IOrderResponse> f = new ArrayList<>();
+		for (AdminOrderResponse o : list) {
+			if (o.getId_order_admin() == id) {
+				f.add(o);
+			}
+		}
+
+		return f;
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

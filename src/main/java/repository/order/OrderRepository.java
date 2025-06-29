@@ -95,7 +95,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithResponse() {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name , od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status , o.sign, ps.id, o.customer_phone, o.publicKey "
+		String sql = "SELECT o.id, o.customer_name, p.name , od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status , o.sign, ps.id, o.customer_phone, o.publicKey, od.price "
 				+ " FROM ecommerce.order o "
 				+ " INNER JOIN order_detail od ON od.order_id = o.id "
 				+ " INNER JOIN product_sku ps ON ps.id = od.product_sku_id "
@@ -106,7 +106,7 @@ public class OrderRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getLong(10), rs.getString(2), rs.getString(3),
-						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12));
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12), rs.getDouble(13));
 				list.add(aor);
 			}
 		} catch (Exception e) {
@@ -120,7 +120,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithResponseId(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey, od.price " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -133,7 +133,7 @@ public class OrderRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getLong(10), rs.getString(2), rs.getString(3),
-						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12));
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12), rs.getDouble(13));
 				list.add(aor);
 			}
 		} catch (Exception e) {
@@ -172,7 +172,7 @@ public class OrderRepository {
 	public AdminOrderResponse getOrderById(Long orderId) {
 		AdminOrderResponse orderResponse = null;
 		String sql = "SELECT o.id, o.customer_name AS user_name, p.name AS product_name, od.quantity, "
-				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.customer_phone, o.publicKey "
+				+ "o.total_price, o.customer_address, o.create_at ,o.order_status, o.sign , ps.id, o.customer_phone, o.publicKey, od.price "
 				+ "FROM ecommerce.order o "
 				+ "INNER JOIN order_detail od ON od.order_id = o.id "
 				+ "INNER JOIN product_sku ps ON ps.id = od.product_sku_id "
@@ -197,7 +197,7 @@ public class OrderRepository {
 							rs.getString(7),
 							rs.getString(8),
 							rs.getString(9), rs.getString(11),
-							rs.getString(12) // Thêm publicKey vào constructor
+							rs.getString(12), rs.getDouble(13) // Thêm publicKey vào constructor
 					);
 				}
 			}
@@ -289,7 +289,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithPending(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey, od.price " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -302,7 +302,7 @@ public class OrderRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getLong(10), rs.getString(2), rs.getString(3),
-						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12));
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12), rs.getDouble(13));
 				list.add(aor);
 			}
 		} catch (Exception e) {
@@ -316,7 +316,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithCancle(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey, od.price " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -329,7 +329,7 @@ public class OrderRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getLong(10), rs.getString(2), rs.getString(3),
-						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12));
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12), rs.getDouble(13));
 				list.add(aor);
 			}
 		} catch (Exception e) {
@@ -343,7 +343,7 @@ public class OrderRepository {
 	public List<AdminOrderResponse> getAllOrderWithSuccess(Long id) {
 		List<AdminOrderResponse> list = new ArrayList<>();
 		connection = DBConnection.getConection();
-		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey " +
+		String sql = "SELECT o.id, o.customer_name, p.name, od.quantity, o.total_price, o.customer_address, o.create_at, o.order_status, o.sign, ps.id, o.customer_phone, o.publicKey, od.price " +
 				"FROM ecommerce.`order` o " +
 				"INNER JOIN order_detail od ON od.order_id = o.id " +
 				"INNER JOIN product_sku ps ON ps.id = od.product_sku_id " +
@@ -356,7 +356,7 @@ public class OrderRepository {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				AdminOrderResponse aor = new AdminOrderResponse(rs.getLong(1), rs.getLong(10), rs.getString(2), rs.getString(3),
-						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12));
+						rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(11), rs.getString(12), rs.getDouble(13));
 				list.add(aor);
 			}
 		} catch (Exception e) {
