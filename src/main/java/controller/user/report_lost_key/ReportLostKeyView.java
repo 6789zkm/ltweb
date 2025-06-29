@@ -25,7 +25,7 @@ public class ReportLostKeyView extends HttpServlet{
         // Gửi object sang JSP
         req.setAttribute("publickeystorage", publicKeyStorage);
         req.setAttribute("user", user); // nếu cần
-        req.getRequestDispatcher("view/user/report_lost_key.jsp").forward(req, resp);;
+        req.getRequestDispatcher("view/user/report_lost_key.jsp").forward(req, resp);
     }
 
     @Override

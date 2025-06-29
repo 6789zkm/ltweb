@@ -167,68 +167,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:if test="${not empty error}">
-                            <div class="alert alert-danger" role="alert">${error}</div>
-                        </c:if>
-
-                        <c:set var="currentCustomerId" value="-1" />
-                        <c:set var="publicKeyList" value="" />
-                        <c:set var="prevSignInfo" value="${null}" />
-
-                        <c:forEach var="s" items="${list_sign}" varStatus="loop">
-                            <c:choose>
-                                <c:when test="${s.id != currentCustomerId}">
-                                    <c:if test="${!loop.first}">
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>${prevSignInfo.id}</td>
-                                            <td>${prevSignInfo.name}</td>
-                                            <td>${prevSignInfo.email}</td>
-                                            <td>${prevSignInfo.phone}</td>
-                                            <td>
-                                                <ul class="key-list">
-                                                        ${publicKeyList}
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <fmt:formatDate value="${prevSignInfo.create_date}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                                            </td>
-                                            <td>
-                                                    ${prevSignInfo.isDelete == false ? "False" : "True"}
-                                            </td>
-                                        </tr>
-                                    </c:if>
-                                    <c:set var="currentCustomerId" value="${s.id}" />
-                                    <c:set var="publicKeyList" value="<li>${fn:escapeXml(s.publickey)}</li>" />
-                                    <c:set var="prevSignInfo" value="${s}" />
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="publicKeyList" value="${publicKeyList}<li>${fn:escapeXml(s.publickey)}</li>" />
-                                    <c:set var="prevSignInfo" value="${s}" />
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:if test="${loop.last}">
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>${prevSignInfo.id}</td>
-                                    <td>${prevSignInfo.name}</td>
-                                    <td>${prevSignInfo.email}</td>
-                                    <td>${prevSignInfo.phone}</td>
-                                    <td>
-                                        <ul class="key-list">
-                                                ${publicKeyList}
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <fmt:formatDate value="${prevSignInfo.create_date}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                                    </td>
-                                    <td>
-                                            ${prevSignInfo.isDelete == false ? "False" : "True"}
-                                    </td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
+                            <c:forEach var="r" items="${list}">
+                            <tr>
+                                <td>${r.id}</td>
+                                <td>${r.name}</td>
+                                <td>${r.email}</td>
+                                <td>${r.phone}</td>
+                                <td>${r.publicKey}</td>
+                                <td><fmt:formatDate value="${r.reportTime}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                                <td>${r.isHandled ? "Đã xử lý" : "Chưa xử lý"}</td>
+                            </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

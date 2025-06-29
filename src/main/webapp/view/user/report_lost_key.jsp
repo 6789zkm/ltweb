@@ -82,8 +82,11 @@
           </div>
           <div class="mt-3 text-center">
             <input type="hidden" name="userId" value="${user.id}">
-              <a href="<%=request.getContextPath()%>/historyReportLostKey"><button class="btn btn-primary profile-button" type="submit">Báo
-              Cáo</button>
+              <form action="${pageContext.request.contextPath}/report_lost_key_submit" method="post">
+                  <input type="text" name="email" value="${user.email}" />
+                  <input type="text" name="publicKey" value="${publickeystorage.publicKey}" />
+                  <button class="btn btn-primary profile-button" type="submit">Báo Cáo</button>
+              </form>
             <a href="<%=request.getContextPath()%>/profile"><button
                     class="btn btn-primary profile-button" type="button">Huỷ</button></a>
           </div>
