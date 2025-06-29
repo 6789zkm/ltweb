@@ -86,7 +86,7 @@
 								class="btn btn-primary profile-button" type="button">Edit
 								Profile</button></a>
 
-						<a href="<%=request.getContextPath()%>/tool_sign/ToolSign-1.0.exe" download>
+						<a href="<%=request.getContextPath()%>/tool_sign/SignTool.exe" download>
 							<button class="btn btn-success profile-button ms-2" type="button">
 								Tải phần mềm lấy khóa
 							</button>

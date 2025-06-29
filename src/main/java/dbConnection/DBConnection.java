@@ -14,7 +14,7 @@ public class DBConnection {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/ecommerce");
 		config.setUsername("root");
-		config.setPassword("Az01219876723");
+		config.setPassword("");
 
 		config.setMaximumPoolSize(50); // Giảm để phù hợp với `max_connections`	
 		config.setMinimumIdle(5); // Tăng số kết nối nhàn rỗi tối thiểu

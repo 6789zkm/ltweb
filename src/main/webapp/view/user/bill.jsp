@@ -86,8 +86,7 @@
                     <div class="payment-info">
                         <div>
                             <strong>Thông tin thanh toán</strong><br>
-    <%--                        Account No: 123567744<br>--%>
-    <%--                        Routing No: 120000547--%>
+<%--                            <strong>Đã thanh toán thành công</strong>--%>
                         </div>
                         <div class="total-due">
                             <strong>TOTAL DUE</strong><br>
@@ -105,10 +104,10 @@
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Định danh hóa đơn</label>
                         <div class="flex">
-                            <input id="billindetify" type="text" class="form-control" value="${bill.encode()}" readonly>
+                            <input id="billindetify" type="text" class="form-control" name="bill_encode" value="${bill.encode()}" readonly>
                             <button type="button" class="btn btn-secondary form-control" id="copyClipboard">Copy</button>
                         </div>
-                        
+
                     </div>
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Nhập mã chữ ký số</label>
