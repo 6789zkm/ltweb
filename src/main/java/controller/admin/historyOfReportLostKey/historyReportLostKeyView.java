@@ -16,7 +16,7 @@ import java.util.List;
 
 @WebServlet("/historyReportLostKey")
 public class historyReportLostKeyView extends HttpServlet {
-    SignRepository signRepository = new SignRepository();
+//    SignRepository signRepository = new SignRepository();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
