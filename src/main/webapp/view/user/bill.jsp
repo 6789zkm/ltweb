@@ -118,6 +118,17 @@
                     </div>
                     <div id="signature-status" class="mt-3"></div>
                 </form>
+                <div>
+                <h6>Nếu chưa có khóa hãy tải phần mềm tạo khóa về và vui lòng cập nhật lại khóa!Xin cảm ơn!</h6>
+                <div class="mt-3 text-center">
+                 <a href="<%=request.getContextPath()%>/tool_sign/SignTool.exe" download>
+                                							<button class="btn btn-success profile-button ms-2" type="button">
+                                								Tải phần mềm lấy khóa
+                                							</button>
+                                						</a>
+                </div>
+
+                </div>
             </div>
         </div>
     </div>
