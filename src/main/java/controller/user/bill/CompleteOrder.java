@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import dto.request.OrderRequest;
 import dto.response.DetailCartResponse;
+import entity.Bill;
 import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class CompleteOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
+        Bill bill = (Bill) req.getSession().getAttribute("bill");
         OrderService orderService = new OrderService();
         List<DetailCartResponse> selectedProducts = (List<DetailCartResponse>) req.getSession().getAttribute("selectedProducts");
         
@@ -37,6 +39,12 @@ public class CompleteOrder extends HttpServlet {
         String sign = (String) req.getParameter("signatureInput");
         if (sign == null || sign.isEmpty()) {
             req.setAttribute("error", "Please sign the order.");
+            req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
+            return;
+        }
+
+        if (!bill.verify(user.getKey(), sign)) {
+            req.setAttribute("error", "Chữ ký không hợp lệ.");
             req.getRequestDispatcher("/view/user/bill.jsp").forward(req, resp);
             return;
         }

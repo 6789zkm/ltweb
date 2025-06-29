@@ -138,7 +138,8 @@
 											<td>${prevOrder.date_order}</td>
 											<td><fmt:formatNumber value="${totalPrice}" pattern="#,##0"/>đ</td>
 											<td><span class="badge bg-success">${prevOrder.status}</span></td>
-											<td><!-- <span class="badge bg-success">${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}</span> -->
+											<td><span class="badge bg-success">${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}</span>
+	                                        <span class="badge bg-success">${prevOrder.getPublicKey()}</span>
 										<c:if test="${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign()) == true}">
 											<span class="badge bg-success">Đã xác thực</span>
 										</c:if>
@@ -199,7 +200,8 @@
 									<td><fmt:formatNumber value="${totalPrice}" pattern="#,##0"/>đ</td>
 									<td><span class="badge bg-success">${prevOrder.status}</span></td>
 									<td>
-										<!-- <span class="badge bg-success">${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}</span> -->
+										<span class="badge bg-success">${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign())}</span>
+										<span class="badge bg-success">${prevOrder.getPublicKey()}</span>
 										<c:if test="${orderBillMap.get(prevOrder.getId_order_admin()).verify(prevOrder.getPublicKey(), prevOrder.getSign()) == true}">
 											<span class="badge bg-success">Đã xác thực</span>
 										</c:if>
