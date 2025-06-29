@@ -1920,6 +1920,16 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
                                                          (9, 16, 2),
                                                          (10, 17, 2);
 
+CREATE TABLE lostkeyreport (
+                               id INT AUTO_INCREMENT PRIMARY KEY,
+                               userID INT,
+                               publicKey TEXT,
+                               reportTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               isHandled BOOLEAN DEFAULT FALSE,
+                               FOREIGN KEY (userID) REFERENCES user(id)
+);
+
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
