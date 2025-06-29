@@ -126,13 +126,13 @@ public class SignController {
 
         // Save Private Key button
         view.getBtnSavePrivateKey().addActionListener(e -> {
-            String key = view.getPrivateKey_field().getText().trim();
-            if (key.isEmpty()) {
-                JOptionPane.showMessageDialog(view, "Vui lòng nhập hoặc tạo khóa bí mật trước khi lưu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            String key = view.getPrivateKey_field().getText().trim();
+//            if (key.isEmpty()) {
+//                JOptionPane.showMessageDialog(view, "Vui lòng nhập hoặc tạo khóa bí mật trước khi lưu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
             try {
-                String result = model.savePrivateKey(key, view);
+                String result = model.savePrivateKey(model.getPrivateKeyStr(), view);
                 view.getOutput().setText(result);
 //                updateEncryptDecryptButtons();
             } catch (IOException ex) {
