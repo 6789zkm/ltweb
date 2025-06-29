@@ -46,4 +46,27 @@ public class PublicKeyStorageDB {
         }
         return null;
     }
+
+    public  String getPublicKeyF(User user) {
+        try {
+            Connection cnn = DBConnection.getConection();
+            String sql = "SELECT publicKey FROM `publickeystorage` WHERE userID = ? ORDER BY updateAt DESC LIMIT 1";
+            PreparedStatement ps = cnn.prepareStatement(sql);
+            ps.setLong(1, user.getId());
+
+
+            // Assuming you have a method to extract the public key from the ResultSet
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("publicKey");
+            }
+
+            ps.close();
+            cnn.close();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

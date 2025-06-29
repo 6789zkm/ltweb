@@ -126,13 +126,13 @@ public class SignController {
 
         // Save Private Key button
         view.getBtnSavePrivateKey().addActionListener(e -> {
-//            String key = view.getPrivateKey_field().getText().trim();
-//            if (key.isEmpty()) {
-//                JOptionPane.showMessageDialog(view, "Vui lòng nhập hoặc tạo khóa bí mật trước khi lưu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
+            String key = model.getPrivateKeyStr().trim();
+            if (key.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Vui lòng nhập hoặc tạo khóa bí mật trước khi lưu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             try {
-                String result = model.savePrivateKey(model.getPrivateKeyStr(), view);
+                String result = model.savePrivateKey(key, view);
                 view.getOutput().setText(result);
 //                updateEncryptDecryptButtons();
             } catch (IOException ex) {
@@ -188,10 +188,12 @@ public class SignController {
     }
 
     private void updateAfterPrivateKeyLoad() {
-        view.getPrivateKey_field().setEnabled(false);
+//        view.getPrivateKey_field().setEnabled(false);
         view.getBtnLoadPrivateKey().setEnabled(false);
         view.getBtnSavePrivateKey().setEnabled(true);
         view.getInput().setEnabled(true);
+        view.getBtnSign().setEnabled(true);
+        view.getBtnSaveResult().setEnabled(true);
         updateEncryptDecryptButtons();
     }
 
@@ -204,9 +206,10 @@ public class SignController {
     }
 
     private void updateEncryptDecryptButtons() {
-        String input = view.getInput().getText().trim();
-        boolean hasInput = !input.isEmpty();
-        boolean hasPublicKey = !view.getPublicKey_field().getText().trim().isEmpty();
+//        String input = view.getInput().getText().trim();
+//        boolean hasInput = !input.isEmpty();
+        boolean hasInput = true;
+        boolean hasPublicKey = !model.getPrivateKeyStr().trim().isEmpty();
         view.getBtnSign().setEnabled(hasInput && hasPublicKey);
     }
 

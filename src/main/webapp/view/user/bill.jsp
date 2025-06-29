@@ -86,8 +86,7 @@
                     <div class="payment-info">
                         <div>
                             <strong>Thông tin thanh toán</strong><br>
-    <%--                        Account No: 123567744<br>--%>
-    <%--                        Routing No: 120000547--%>
+<%--                            <strong>Đã thanh toán thành công</strong>--%>
                         </div>
                         <div class="total-due">
                             <strong>TOTAL DUE</strong><br>
@@ -105,10 +104,10 @@
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Định danh hóa đơn</label>
                         <div class="flex">
-                            <input id="billindetify" type="text" class="form-control" value="${bill.encode()}" readonly>
+                            <input id="billindetify" type="text" class="form-control" name="bill_encode" value="${bill.encode()}" readonly>
                             <button type="button" class="btn btn-secondary form-control" id="copyClipboard">Copy</button>
                         </div>
-                        
+
                     </div>
                     <div class="mb-3">
                         <label for="signature-input" class="form-label">Nhập mã chữ ký số</label>
@@ -119,6 +118,17 @@
                     </div>
                     <div id="signature-status" class="mt-3"></div>
                 </form>
+                <div>
+                <h6>Nếu chưa có khóa hãy tải phần mềm tạo khóa về và vui lòng cập nhật lại khóa!Xin cảm ơn!</h6>
+                <div class="mt-3 text-center">
+                 <a href="<%=request.getContextPath()%>/tool_sign/SignTool.exe" download>
+                                							<button class="btn btn-success profile-button ms-2" type="button">
+                                								Tải phần mềm lấy khóa
+                                							</button>
+                                						</a>
+                </div>
+
+                </div>
             </div>
         </div>
     </div>

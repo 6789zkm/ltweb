@@ -46,7 +46,7 @@
 			<p>Chúng tôi sẽ liên hệ với Quý Khách để xác nhận đơn hàng trong
 				thời gian sớm nhất!</p>
 			<div class="btn-container">
-				<button>Xuất hóa đơn</button>
+<%--				<button>Xuất hóa đơn</button>--%>
 				<a href="home" class="btn btn-warning">Tiếp tục mua hàng</a>
 			</div>
 		</div>
