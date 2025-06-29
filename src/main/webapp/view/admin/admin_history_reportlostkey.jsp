@@ -1,30 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dell
-  Date: 6/29/2025
-  Time: 1:18 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Danh sách khóa | Quản trị Admin</title>
+    <title>Danh sách lịch sử báo mất khoá | Quản trị Admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/css/admin/main.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/css/admin/datatable.css">
+
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
     <link rel="stylesheet"
           href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
@@ -34,64 +31,26 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
-    <style>
-        /* ========================================================= */
-        /* START: CSS mới để xử lý bảng và xuống dòng nội dung dài  */
-        /* ========================================================= */
+    <script
+            src="${pageContext.request.contextPath}/adding/bootstrap/bootstrap.bundle.min.js"></script>
 
-        /* Buộc bảng sử dụng chiều rộng đã định và chiếm toàn bộ không gian */
-        #sampleTable {
-            table-layout: fixed; /* RẤT QUAN TRỌNG: Buộc các cột tuân theo chiều rộng đã đặt */
-            width: 100% !important; /* Đảm bảo bảng chiếm 100% chiều rộng của thẻ cha */
-        }
-
-        /* Định nghĩa chiều rộng cho từng cột (phải đảm bảo tổng các width = 100%) */
-        /* Bạn có thể điều chỉnh các giá trị này */
-        #sampleTable th:nth-child(1), #sampleTable td:nth-child(1) { width: 3%; }   /* Checkbox */
-        #sampleTable th:nth-child(2), #sampleTable td:nth-child(2) { width: 5%; }   /* ID */
-        #sampleTable th:nth-child(3), #sampleTable td:nth-child(3) { width: 12%; }  /* Khách hàng */
-        #sampleTable th:nth-child(4), #sampleTable td:nth-child(4) { width: 15%; }  /* Email */
-        #sampleTable th:nth-child(5), #sampleTable td:nth-child(5) { width: 10%; }  /* Số điện thoại */
-        #sampleTable th:nth-child(6), #sampleTable td:nth-child(6) { width: 35%; }  /* Khóa (Đây là cột quan trọng) */
-        #sampleTable th:nth-child(7), #sampleTable td:nth-child(7) { width: 10%; }  /* Ngày tạo */
-        #sampleTable th:nth-child(8), #sampleTable td:nth-child(8) { width: 10%; }  /* Trạng thái */
-
-
-        /* Thiết lập chung cho các ô và tiêu đề để nội dung tự động xuống dòng */
-        #sampleTable th,
-        #sampleTable td {
-            white-space: normal;      /* Cho phép nội dung xuống dòng */
-            word-wrap: break-word;    /* Buộc các từ dài không có khoảng trắng xuống dòng */
-            overflow-wrap: break-word;/* Phiên bản hiện đại của word-wrap */
-            vertical-align: top;      /* Căn nội dung lên trên cùng của ô */
-            padding: 8px;             /* Thêm padding cho các ô để dễ đọc */
-        }
-
-        /* Đảm bảo ul và li không có padding/margin thừa và nội dung bên trong li xuống dòng */
-        .key-list {
-            list-style: none; /* Bỏ dấu chấm đầu dòng mặc định của ul/li */
-            padding: 0;
-            margin: 0;
-        }
-        .key-list li {
-            word-wrap: break-word;    /* Đảm bảo nội dung trong li cũng xuống dòng */
-            overflow-wrap: break-word;/* Phiên bản hiện đại của word-wrap */
-            padding: 2px 0;           /* Thêm padding nhẹ cho mỗi mục khóa */
-        }
-        /* ========================================================= */
-        /* END: CSS mới để xử lý bảng và xuống dòng nội dung dài    */
-        /* ========================================================= */
-    </style>
 </head>
+
 <body onload="time()" class="app sidebar-mini rtl">
+<!-- Navbar-->
 <header class="app-header">
+    <!-- Sidebar toggle button-->
     <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
        aria-label="Hide Sidebar"></a>
+    <!-- Navbar Right Menu-->
     <ul class="app-nav">
+
+
         <li><a class="app-nav__item" href="${pageContext.request.contextPath}/logout"><i
                 class='bx bx-log-out bx-rotate-180'></i> </a></li>
     </ul>
 </header>
+<!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
@@ -102,13 +61,12 @@
             <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
         </div>
     </div>
-    <hr>
     <ul class="app-menu">
         <li><a class="app-menu__item"
                href="${pageContext.request.contextPath}/adminController"><i
                 class='app-menu__icon bx bx-tachometer'></i><span
                 class="app-menu__label">Bảng điều khiển</span></a></li>
-        <li><a class="app-menu__item"
+        <li><a class="app-menu__item "
                href="${pageContext.request.contextPath}/admin_employee"><i
                 class='app-menu__icon bx bx-id-card'></i> <span
                 class="app-menu__label">Quản lý nhân viên</span></a></li>
@@ -120,25 +78,27 @@
                href="${pageContext.request.contextPath}/adminProduct"><i
                 class='app-menu__icon bx bx-purchase-tag-alt'></i><span
                 class="app-menu__label">Quản lý sản phẩm</span></a></li>
-        <li><a class="app-menu__item"
+        <li><a class="app-menu__item "
                href="${pageContext.request.contextPath}/order"><i
-                class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
-        <li><a class="app-menu__item"
+                class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản
+						lý đơn hàng</span></a></li>
+        <li><a class="app-menu__item "
                href="${pageContext.request.contextPath}/inventory"><i
-                class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý hàng tồn kho</span></a></li>
+                class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản
+						lý hàng tồn kho</span></a></li>
         <li><a class="app-menu__item"
                href="${pageContext.request.contextPath}/historySign"><i
                 class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử tạo khóa</span></a></li>
         <li><a class="app-menu__item active"
                href="${pageContext.request.contextPath}/historyReportLostKey"><i
                 class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lịch sử báo mất khoá</span></a></li>
-
     </ul>
 </aside>
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Danh sách lịch sử báo mất khoá</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Danh
+                sách lịch sử báo mất khoá</b></a></li>
         </ul>
         <div id="clock"></div>
     </div>
@@ -149,36 +109,49 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
                             <%-- <a class="btn btn-add btn-sm"
-                                           href="<%=request.getContextPath()%>/adminAddProduct?action=view"
-                                           title="Thêm"><i class="fas fa-plus"></i> Tạo mới sản phẩm</a> --%>
+                                href="<%=request.getContextPath()%>/adminAddProduct?action=view"
+                                title="Thêm"><i class="fas fa-plus"></i> Tạo mới sản phẩm</a> --%>
                         </div>
+
                     </div>
-                    <table class="table table-hover table-bordered" id="sampleTable">
+                    <table class="table table-hover table-bordered" id="productTable">
                         <thead>
                         <tr>
-                            <th width="10"><input type="checkbox" id="all"></th>
                             <th>ID</th>
-                            <th>Khách hàng</th>
+                            <th>Mã khách hàng</th>
+                            <th>Tên khách hàng</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
-                            <th>Khóa</th>
-                            <th>Ngày tạo</th>
+                            <th>Public Key</th>
+                            <th>Thời gian báo mất</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
+
                         <tbody>
-                            <c:forEach var="r" items="${list}">
+                        <c:forEach items="${list}" var="r">
                             <tr>
                                 <td>${r.id}</td>
+                                <td>${r.userID}</td>
                                 <td>${r.name}</td>
                                 <td>${r.email}</td>
                                 <td>${r.phone}</td>
-                                <td>${r.publicKey}</td>
+                                <td style="max-width: 300px; overflow-wrap: break-word;">${r.publicKey}</td>
                                 <td><fmt:formatDate value="${r.reportTime}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-                                <td>${r.isHandled ? "Đã xử lý" : "Chưa xử lý"}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${r.handled}">
+                                            Đã xử lý
+                                        </c:when>
+                                        <c:otherwise>
+                                            Chưa xử lý
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
-                            </c:forEach>
+                        </c:forEach>
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -186,10 +159,37 @@
     </div>
 </main>
 
-<script src="${pageContext.request.contextPath}/js/admin/main.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
+     aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">Bạn có chắc chắn muốn xóa sản phẩm này
+                không?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script>
-    // Thời Gian
+
+
+<script src="${pageContext.request.contextPath}/js/admin/main.js"></script>
+<script
+        src="${pageContext.request.contextPath}/js/admin/admin_product.js"></script>
+
+<script type="text/javascript">
+    //Thời Gian
     function time() {
         var today = new Date();
         var weekday = new Array(7);
@@ -203,7 +203,7 @@
         var day = weekday[today.getDay()];
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
-        var yy = today.getFullYear();
+        var yyyy = today.getFullYear();
         var h = today.getHours();
         var m = today.getMinutes();
         var s = today.getSeconds();
@@ -211,12 +211,12 @@
         s = checkTime(s);
         nowTime = h + " giờ " + m + " phút " + s + " giây";
         if (dd < 10) {
-            dd = '0' + dd;
+            dd = '0' + dd
         }
         if (mm < 10) {
-            mm = '0' + mm;
+            mm = '0' + mm
         }
-        today = day + ', ' + dd + '/' + mm + '/' + yy;
+        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
         tmp = '<span class="date"> ' + today + ' - ' + nowTime + '</span>';
         document.getElementById("clock").innerHTML = tmp;
         clocktime = setTimeout("time()", "1000", "Javascript");
@@ -230,12 +230,14 @@
     }
 </script>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
+<!-- DataTables JS -->
+<script type="text/javascript"
+        src="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#sampleTable').DataTable({
+        $('#productTable').DataTable({
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json'
             },
@@ -244,17 +246,15 @@
                 [10, 25, 50, -1],
                 [10, 25, 50, "Tất cả"]
             ],
-            // RẤT QUAN TRỌNG: Vô hiệu hóa DataTables tự động tính chiều rộng
-            autoWidth: false,
-            // Vô hiệu hóa tính năng cuộn ngang của DataTables
-            scrollX: false,
-            // Cấu hình DOM để giữ lại thanh tìm kiếm
             dom: '<"row"<"col-sm-6"l><"col-sm-6"f>>t<"row"<"col-sm-6"i><"col-sm-6 pagination-wrapper"p>>',
         });
 
-        // Đảm bảo phân trang được căn trái nếu có CSS tương ứng
+        // Move pagination to the left
         $('.pagination-wrapper').addClass('d-flex justify-content-start');
     });
+
 </script>
+
 </body>
+
 </html>

@@ -1928,6 +1928,7 @@ CREATE TABLE lostkeyreport (
                                isHandled BOOLEAN DEFAULT FALSE,
                                FOREIGN KEY (userID) REFERENCES user(id)
 );
+ALTER TABLE lostkeyreport CHANGE isHandled handled BOOLEAN;
 
 
 --

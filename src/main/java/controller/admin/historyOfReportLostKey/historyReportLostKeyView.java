@@ -27,7 +27,9 @@ public class historyReportLostKeyView extends HttpServlet {
             List<LostKeyReport> list = repo.getAllReports();
             System.out.println(list);
             req.setAttribute("list", list);
-            resp.sendRedirect(req.getContextPath() + "/view/admin/admin_history_reportlostkey.jsp");
+//            resp.sendRedirect(req.getContextPath() + "/view/admin/admin_history_reportlostkey.jsp");
+            req.getRequestDispatcher("/view/admin/admin_history_reportlostkey.jsp").forward(req, resp);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

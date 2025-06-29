@@ -11,12 +11,12 @@ public class LostKeyReport {
     private String phone;
     private String publicKey;
     private Timestamp reportTime;
-    private boolean isHandled;
+    private boolean handled;
 
     public LostKeyReport() {
     }
 
-    public LostKeyReport(Long id, Long userID, String name, String email, String phone, String publicKey, Timestamp reportTime, boolean isHandled) {
+    public LostKeyReport(Long id, Long userID, String name, String email, String phone, String publicKey, Timestamp reportTime, boolean handled) {
         this.id = id;
         this.userID = userID;
         this.name = name;
@@ -24,7 +24,7 @@ public class LostKeyReport {
         this.phone = phone;
         this.publicKey = publicKey;
         this.reportTime = reportTime;
-        this.isHandled = isHandled;
+        this.handled = handled;
     }
 
     public Long getId() {
@@ -83,12 +83,12 @@ public class LostKeyReport {
         this.reportTime = reportTime;
     }
 
-    public boolean isHandled() {
-        return isHandled;
+    public boolean getHandled() {
+        return handled;
     }
 
     public void setHandled(boolean handled) {
-        isHandled = handled;
+        this.handled = handled;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LostKeyReport {
                 ", phone='" + phone + '\'' +
                 ", publicKey='" + publicKey + '\'' +
                 ", reportTime=" + reportTime +
-                ", isHandled=" + isHandled +
+                ", handled=" + handled +
                 '}';
     }
 }

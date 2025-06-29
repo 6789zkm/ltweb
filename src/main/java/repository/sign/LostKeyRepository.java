@@ -26,7 +26,7 @@ public class LostKeyRepository {
 
     public List<LostKeyReport> getAllReports() throws SQLException {
         List<LostKeyReport> list = new ArrayList<>();
-        String sql = "SELECT l.id, u.id, u.name, u.email, u.phone, l.publicKey, l.reportTime, l.isHandled " +
+        String sql = "SELECT l.id, u.id, u.name, u.email, u.phone, l.publicKey, l.reportTime, l.handled " +
                 "FROM lostkeyreport l JOIN user u ON l.userID = u.id ORDER BY l.reportTime DESC";
         connection = DBConnection.getConection();
         pst = connection.prepareStatement(sql);
